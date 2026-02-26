@@ -1,35 +1,36 @@
 package modele;
 
-public class Card {
-	public enum Type {RED,WHITE,GREEN,BLUE,DARK,NONE};
-	private Type color;
-	private int totalCost;
-	private int colorCost;
-	private int atk;
-	private int def;
-	private boolean land;
+public abstract class Card {
+	
+	public enum Colors {RED,WHITE,GREEN,BLUE,DARK,NONE};
+	public enum Type {CREATURE,LAND};
+	
+	private Colors color;
+	private Type type; 
 	private String name;
-	private String description;
-	private String[] skills;
-	private boolean tapped;
+	private boolean tapped;	
 	
-	
-	/**
-	 * This constructor is used to create any card
-	*/
-	public Card( Type color, int totalcost, int colorcost, int attack, int defense, boolean land, String nom, String[] bonus ) {
+	public Card( Colors color, String nom, Type type ) {
+		this.type = type;
 		this.color = color;
-		this.land = land;
-		totalCost = totalcost;
-		colorCost = colorcost;
-		atk = attack;
-		def = defense;
 		name = nom;
 		tapped = false;
-		if (land) {			
-			description = "Terrain";			
-		} else {
-			description = "Créature";
-		}
+	}
+	
+	public Colors getColor() {
+		return color;
+	}
+	
+	public boolean isTapped() {
+		return tapped;
+	}
+	
+	public void setTapped(boolean tapped) {
+		this.tapped = tapped;
+	}
+	
+	@Override
+	public String toString() {
+		return "Type : " + type + "\ncolor : " + color + "\nnom : " + name + "\ntapped : " + tapped;		
 	}
 }
