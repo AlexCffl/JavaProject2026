@@ -12,15 +12,19 @@ public class Deck extends Stack<Card>{
 		super();
 	}
 	
-	public void shuffle() {
+	/*public void shuffle() {
 		var buffer = new ArrayList<Card>();
-		for (int i = 0; i<size(); i++) {
+		for (int i = 0; i< size(); i++) {
 			buffer.add(pop());
 		}
 		var rd = new Random();
 		while (!buffer.isEmpty()) {
 			push(buffer.get(rd.nextInt(buffer.size())));
 		}
+	}*/
+	
+	public void shuffle() {
+		java.util.Collections.shuffle(this);
 	}
 	
 	public Card draw() {
