@@ -22,11 +22,11 @@ public class CreatureCard extends Card{
 	@Override
 	public String toString() {
 		var retour = super.toString();
-		retour += "\nattack : " + atk + "\ndefense : " + def + "\ncost : " + (tC-cC) + "+" + cC + "\neffects : ";
+		retour += " | attack : " + atk + " | defense : " + def + " | cost : " + (tC-cC) + "+" + cC + " | effects : ";
 		for (var effect : effects) {
 			retour += effect + " ";
 		}
-		return retour+'\n';
+		return retour + '\n';
 	}
 	
 }

@@ -8,16 +8,15 @@ public class Joueur {
 	private String nom;
 	private int pointsDeVie;
 	private Deck deck; 
-	private List<Card> main; 
-	private List<Card> terrain;
-	private List<Card> cimetiere;
+	private ArrayList<Card> main; 
+	private ArrayList<Card> terrain;
+	private ArrayList<Card> cimetiere;
 	private int reserveMana;
 
 	public Joueur(String nom, Deck deckDeDepart) {
 		this.nom = nom;
 		this.pointsDeVie = 20; 
-		this.deck = deckDeDepart;
-		
+		this.deck = deckDeDepart;	
 		this.main = new ArrayList<>();
 		this.terrain = new ArrayList<>();
 		this.cimetiere = new ArrayList<>();
@@ -25,9 +24,8 @@ public class Joueur {
 	}
 
 	public void piocherCarte() {
-		if (!deck.isEmpty()) {
-			Card cartePiochee = deck.draw(); 
-			main.add(cartePiochee);
+		if (!deck.isEmpty()) { 
+			main.add(deck.draw());
 		} else {
 			this.pointsDeVie = 0; 
 		}
@@ -69,15 +67,15 @@ public class Joueur {
 		return deck;
 	}
 
-	public List<Card> getMain() {
+	public ArrayList<Card> getMain() {
 		return main;
 	}
 
-	public List<Card> getTerrain() {
+	public ArrayList<Card> getTerrain() {
 		return terrain;
 	}
 
-	public List<Card> getCimetiere() {
+	public ArrayList<Card> getCimetiere() {
 		return cimetiere;
 	}
 	
