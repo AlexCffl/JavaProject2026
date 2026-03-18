@@ -3,7 +3,7 @@ package modele;
 public class LandCard extends Card {
 
 	public LandCard(Colors color, String nom) {
-		super(color, nom, Type.LAND);		
+		super(Type.LAND, color, nom);		
 	}
 
 	@Override

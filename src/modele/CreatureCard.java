@@ -11,7 +11,7 @@ public class CreatureCard extends Card{
 	private int cC;
 
 	public CreatureCard(Colors color, String nom, int attack, int defense, Effects[] bonus, int totalCost, int colorCost) {
-		super(color, nom, Type.CREATURE);
+		super(Type.CREATURE, color, nom);
 		atk = attack;
 		def = defense;
 		effects = bonus;
@@ -28,5 +28,10 @@ public class CreatureCard extends Card{
 		}
 		return retour + '\n';
 	}
+	
+	//  getter
+		public int getTotalCost() {
+			return tC;
+		}
 	
 }
