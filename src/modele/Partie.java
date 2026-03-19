@@ -2,6 +2,8 @@ package modele;
 
 import java.io.File;
 
+import modele.CreatureCard.Effects;
+
 public class Partie {
 
 	public static void main(String[] args) {
@@ -13,7 +15,7 @@ public class Partie {
 			deckJoueur1.push(new LandCard(Card.Colors.RED, "Montagne"));
 		}
 
-		CreatureCard.Effects[] pasDeffets = {}; 
+		CreatureCard.Effects[] pasDeffets = {Effects.FLYING,Effects.HASTE}; 
 		for (int i = 0; i < 10; i++) {
 			deckJoueur1.push(new CreatureCard(Card.Colors.RED, "Gobelin", 2, 1, pasDeffets, 1, 1));
 		}
@@ -61,7 +63,7 @@ public class Partie {
 		
 		System.out.println("cartes restantes dans le deck : " + joueur1.getDeck().size());
 		
-		// Test de sauvegarde de ton camarade
+		//test de sauvegarde du deckJoueur1
 		var file = new File("testDeck.txt");
 		deckJoueur1.serialize(file);
 		System.out.println("Deck sauvegardé dans " + file.getName());

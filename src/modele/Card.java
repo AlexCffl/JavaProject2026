@@ -21,51 +21,15 @@ public abstract class Card implements Serializable{
 	private String name;
 	private boolean tapped;	
 	
-	public Card(Type type, Colors color, String nom ) {
+	public Card(Type type, Colors color, String name , boolean tapped) {
 		this.type = type;
 		this.color = color;
-		name = nom;
-		tapped = false;
+		this.name = name;
+		this.tapped = tapped;
 	}
 	
-	public Card loadCard (File file) {
-		Card card = null;
-		// Code de chargement mis en commentaire pour corriger les erreurs de syntaxe
-		/*
-		try (var fis = new FileInputStream(file); var ois = new ObjectInputStream(fis)){
-			var serializedCard = ois.readLine().split("\\|");
-			
-			var leTypeStr = serializedCard[0].split(":")[1];
-			Type leType = null;
-			
-			switch (leTypeStr) {
-			case " LAND" :
-				leType = Type.LAND;
-				break;
-			case " CREATURE" :
-				leType = Type.CREATURE;
-				break;
-			}
-			
-			var laCouleurStr = serializedCard[1].split(":")[1];
-			Colors laCouleur = null;
-			
-			// switch (laCouleurStr) {
-			// case " RED" :
-			// 	laCouleur = 
-			// }
-			
-			var leNom = serializedCard[2].split(":")[1];
-			var engage = serializedCard[3].split(":")[1].equals(" true");
-			
-	    } catch (FileNotFoundException e) {
-			System.out.println("Fichier " + file.getName() + " introuvable");
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		*/
-		return card;		
+	public Card(Type type, Colors color, String name) {
+		this(type, color, name, false);
 	}
 	
 	public void serialize(File file) {		
@@ -89,6 +53,18 @@ public abstract class Card implements Serializable{
 	
 	public void setTapped(boolean tapped) {
 		this.tapped = tapped;
+	}
+	
+	protected void setColor(Colors color) {
+		this.color = color;
+	}
+	
+	protected void setName(String name) {
+		this.name = name;
+	}
+	
+	protected void setType(Type type) {
+		this.type = type;
 	}
 	
 	@Override
