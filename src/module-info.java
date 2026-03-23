@@ -4,5 +4,5 @@
 /**
  * 
  */
-module Pokemon {
+module Pokemon_1 {
 }
