@@ -11,6 +11,7 @@ public class Joueur {
 	private ArrayList<Card> terrain;
 	private ArrayList<Card> cimetiere;
 	private int reserveMana;
+	private int manaMax;
 
 	public Joueur(String nom, Deck deckDeDepart) {
 		this.nom = nom;
@@ -20,6 +21,20 @@ public class Joueur {
 		this.terrain = new ArrayList<>();
 		this.cimetiere = new ArrayList<>();
 		this.reserveMana = 0;
+		this.manaMax = 0;
+	}
+	
+	
+	public void nouveauTour() {
+		if (this.manaMax < 10) {
+			this.manaMax += 1; 
+		}
+		this.reserveMana = this.manaMax; 
+		
+		System.out.println("debut du tour de " + this.nom);
+		System.out.println(" Mana rechargé : " + this.reserveMana + "/" + this.manaMax);
+		
+		piocherCarte();
 	}
 
 	public void piocherCarte() {
@@ -39,37 +54,33 @@ public class Joueur {
 	public void jouerCarte(Card carte) {
 		if (!main.contains(carte)) return; 
 
-		if (carte instanceof LandCard) {
-			main.remove(carte);
-			terrain.add(carte);
-			System.out.println(this.nom + " pose un terrain : " + carte.getColor());
-		} 
-		else if (carte instanceof CreatureCard) {
-			// carte generique >> creature pour pouvoir lire ses infos specifiques
+		if (carte instanceof CreatureCard) {
 			CreatureCard creature = (CreatureCard) carte; 
-			
-			// lecture du prix de la carte
 			int cout = creature.getTotalCost(); 
 			
-			// 3.  vérifier assez de mana ?
 			if (this.reserveMana >= cout) {
 				this.reserveMana -= cout; 
 				main.remove(carte);
 				terrain.add(carte);
-				System.out.println(this.nom + " invoque une créature en payant " + cout + " mana !");
+				System.out.println(this.nom + " invoque une créature en payant " + cout + " mana ! (Reste: " + this.reserveMana);
 			} else {
 				System.out.println(this.nom + " n'a pas assez de mana (" + this.reserveMana + "/" + cout + ") pour la jouer !");
 			}
 		}
 	}
 
-	public void engagerTerrain(LandCard terrainCard) {
-		if (this.terrain.contains(terrainCard) && !terrainCard.isTapped()) {
-			terrainCard.setTapped(true);
-			this.reserveMana += 1;
-			System.out.println(this.nom + " engage " + terrainCard.getColor() + " et gagne 1 mana.");
+	public void attaquer(CreatureCard attaquant, Joueur adversaire) {
+		if (this.terrain.contains(attaquant) && !attaquant.isTapped()) {
+			
+			int degats = attaquant.getAtk();
+			adversaire.subirDegats(degats); 
+			attaquant.setTapped(true);      
+			
+			System.out.println(this.nom + " attaque avec une créature (" + degats + " ATK) !");
+			System.out.println(adversaire.getNom() + " subit " + degats + " dégâts. Il lui reste " + adversaire.getPointsDeVie() + " PV.");
+			
 		} else {
-			System.out.println("impossible d'engager ce terrain.");
+			System.out.println("Impossible d'attaquer avec cette carte (pas sur le terrain ou déjà engagée)");
 		}
 	}
 
@@ -82,11 +93,12 @@ public class Joueur {
 	}
 	
 	// Getters
-	public String getNom() { return nom; }
-	public int getPointsDeVie() { return pointsDeVie; }
+	public String getNom() { return nom;}
+	public int getPointsDeVie() { return pointsDeVie;}
 	public Deck getDeck() { return deck; }
-	public ArrayList<Card> getMain() { return main; }
-	public ArrayList<Card> getTerrain() { return terrain; }
-	public ArrayList<Card> getCimetiere() { return cimetiere; }
-	public int getReserveMana() { return reserveMana; }
+	public ArrayList<Card> getMain() { return main;}
+	public ArrayList<Card> getTerrain() { return terrain;}
+	public ArrayList<Card> getCimetiere() { return cimetiere;}
+	public int getReserveMana() { return reserveMana;}
+	public int getManaMax() { return manaMax;}
 }

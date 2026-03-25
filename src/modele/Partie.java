@@ -11,19 +11,15 @@ public class Partie {
 
 		Deck deckJoueur1 = new Deck("deck test");
 
-		for (int i = 0; i < 10; i++) {
-			deckJoueur1.push(new LandCard(Card.Colors.RED, "Montagne"));
-		}
-
 		CreatureCard.Effects[] pasDeffets = {Effects.FLYING,Effects.HASTE}; 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 20; i++) {
 			deckJoueur1.push(new CreatureCard(Card.Colors.RED, "Gobelin", 2, 1, pasDeffets, 1, 1));
 		}
 
 		System.out.println("Melange du deck...");
 		deckJoueur1.shuffle();
 
-		Joueur joueur1 = new Joueur("A", deckJoueur1);
+		Joueur joueur1 = new Joueur("JoueurA", deckJoueur1);
 		System.out.println("Joueur " + joueur1.getNom() + " créé avec " + joueur1.getPointsDeVie() + " PV.");
 
 		System.out.println(joueur1.getNom() + " pioche ses 7 cartes...");
@@ -35,20 +31,14 @@ public class Partie {
 			System.out.println("carte " + (i + 1) + " : " + carteEnMain.toString().replace("\n", ""));
 		}
 		
-		System.out.println("simulation tour 1 ");
-		LandCard terrainAJouer = null;
-		for (Card c : joueur1.getMain()) {
-			if (c instanceof LandCard) { 
-				terrainAJouer = (LandCard) c;
-				break; 
-			}
-		}
-		
-		if (terrainAJouer != null) {
-			joueur1.jouerCarte(terrainAJouer);
-			joueur1.engagerTerrain(terrainAJouer);
-		}
+		Deck deckJoueur2 = new Deck("Deck Cible");
+		Joueur joueur2 = new Joueur("joeurX", deckJoueur2);
 
+		
+		//debut du tour (gagne 1 mana max, recharge la jauge, pioche 1 carte)
+		joueur1.nouveauTour();
+		
+		//on cherche une créature dans la main pour la jouer
 		CreatureCard creatureAJouer = null;
 		for (Card c : joueur1.getMain()) {
 			if (c instanceof CreatureCard) {
@@ -60,6 +50,12 @@ public class Partie {
 		if (creatureAJouer != null) {
 			joueur1.jouerCarte(creatureAJouer);
 		}
+		
+		System.out.println("COMBAT");
+		if (creatureAJouer != null) {
+			joueur1.attaquer(creatureAJouer, joueur2);
+		}
+
 		
 		System.out.println("cartes restantes dans le deck : " + joueur1.getDeck().size());
 		

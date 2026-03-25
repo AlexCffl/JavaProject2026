@@ -135,4 +135,12 @@ public class CreatureCard extends Card{
 	public void setEffects(Effects[] effects) {
 		this.effects = effects;
 	}
+	
+	public int getAtk() {
+		return atk;
+	}
+
+	public int getDef() {
+		return def;
+	}
 }
