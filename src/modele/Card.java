@@ -1,15 +1,13 @@
 package modele;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public abstract class Card implements Serializable{
+public abstract class Card implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -32,40 +30,15 @@ public abstract class Card implements Serializable{
 		this(type, color, name, false);
 	}
 	
-	public void serialize(File file) {		
-		try (var fos = new FileOutputStream(file); var oos = new ObjectOutputStream(fos)){
-			oos.writeChars(toString());
-	    } catch (FileNotFoundException e) {
-			System.out.println("Fichier " + file.getName() + " introuvable");
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}			
-	}
+	//Getters
+	public Colors getColor() {return color;}
+	public boolean isTapped() {return tapped;}
 	
-	public Colors getColor() {
-		return color;
-	}
-	
-	public boolean isTapped() {
-		return tapped;
-	}
-	
-	public void setTapped(boolean tapped) {
-		this.tapped = tapped;
-	}
-	
-	protected void setColor(Colors color) {
-		this.color = color;
-	}
-	
-	protected void setName(String name) {
-		this.name = name;
-	}
-	
-	protected void setType(Type type) {
-		this.type = type;
-	}
+	//Setters
+	public void setTapped(boolean tapped) {this.tapped = tapped;}	
+	protected void setColor(Colors color) {this.color = color;}	
+	protected void setName(String name) {this.name = name;}
+	protected void setType(Type type) {this.type = type;}
 	
 	@Override
 	public String toString() {

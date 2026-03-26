@@ -63,5 +63,6 @@ public class Partie {
 		var file = new File("testDeck.txt");
 		deckJoueur1.serialize(file);
 		System.out.println("Deck sauvegardé dans " + file.getName());
+		System.out.println(deckJoueur1.toString());
 	}
 }

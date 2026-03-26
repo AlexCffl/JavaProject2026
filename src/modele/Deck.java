@@ -1,9 +1,11 @@
 package modele;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Stack;
 
@@ -16,6 +18,15 @@ public class Deck extends Stack<Card>{
 	public Deck(String nom) {
 		super();
 		name = nom;
+	}
+	
+	public Deck(File file) {
+		super();
+		try (var fis = new FileInputStream(file); var ois = new ObjectInputStream(fis)) {
+			var cards = ois.readUTF().split("\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void shuffle() {
