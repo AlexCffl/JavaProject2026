@@ -59,10 +59,14 @@ public class Partie {
 		
 		System.out.println("cartes restantes dans le deck : " + joueur1.getDeck().size());
 		
-		//test de sauvegarde du deckJoueur1
 		var file = new File("testDeck.txt");
+		
+		//test de sauvegarde du deckJoueur1
 		deckJoueur1.serialize(file);
 		System.out.println("Deck sauvegardé dans " + file.getName());
-		System.out.println(deckJoueur1.toString());
+		
+		//on le recharge dans un nouveau deck pour prouver que ca marche
+		Deck deckRecharge = new Deck(file);
+		System.out.println("deck rechargé avec succès. il contient : " + deckRecharge.size() + " cartes.");
 	}
 }

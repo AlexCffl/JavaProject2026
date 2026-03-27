@@ -16,7 +16,7 @@ public class LandCard extends Card {
 		super(Type.LAND, color, nom);		
 	}
 	
-	public LandCard(String data) throws InvalidTypeException {
+	/*public LandCard(String data) throws InvalidTypeException {
 		super(Type.LAND,Colors.NONE,"");
 		
 		var serializedCard = data.replaceAll(" ", "").split("\\|");
@@ -54,7 +54,7 @@ public class LandCard extends Card {
 		}   	
 }
 	
-	/*
+	
 	 public LandCard (File file) {
 		super(Type.LAND,Colors.NONE,"");
 		
@@ -73,7 +73,7 @@ public class LandCard extends Card {
 			e.printStackTrace();
 		}		
 	}
-	*/
+	
 	
 	public void serialize(File file) {		
 		try (var fos = new FileOutputStream(file); var oos = new ObjectOutputStream(fos)){
@@ -84,7 +84,7 @@ public class LandCard extends Card {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}			
-	}
+	}*/
 		
 	@Override
 	public String toString() {

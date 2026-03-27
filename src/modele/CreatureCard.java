@@ -1,12 +1,5 @@
 package modele;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class CreatureCard extends Card{
 	
@@ -29,7 +22,7 @@ public class CreatureCard extends Card{
 		cC = colorCost;
 	}
 
-	public CreatureCard (String data) throws InvalidTypeException {
+	/*public CreatureCard (String data) throws InvalidTypeException {
 		super(Type.CREATURE, Colors.NONE, "");
 		
 		var serializedCard = data.replaceAll(" ", "").split("|");
@@ -90,7 +83,7 @@ public class CreatureCard extends Card{
 		}
 	}
 	
-/*	public CreatureCard (File file) {
+	public CreatureCard (File file) {
 		super(Type.CREATURE,Colors.NONE,"");
 		
 		try (var fis = new FileInputStream(file); var ois = new ObjectInputStream(fis)){
@@ -106,7 +99,7 @@ public class CreatureCard extends Card{
 			System.out.println("Mauvais type de carte");
 			e.printStackTrace();
 		}		
-	}*/
+	}
 	
 	public void serialize(File file) {		
 		try (var fos = new FileOutputStream(file); var oos = new ObjectOutputStream(fos)){
@@ -117,7 +110,7 @@ public class CreatureCard extends Card{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}			
-	}
+	}*/
 		
 	@Override
 	public String toString() {
