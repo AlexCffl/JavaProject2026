@@ -14,7 +14,6 @@ public class Deck extends Stack<Card>{
 	private static final long serialVersionUID = -2786129281330759002L;
 	private String name;
 
-	
 	public Deck(String nom) {
 		super();
 		name = nom;

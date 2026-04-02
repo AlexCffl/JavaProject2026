@@ -2,7 +2,7 @@ package modele;
 
 import java.io.File;
 
-import modele.CreatureCard.Effects;
+import modele.Card.Effects;
 
 public class Partie {
 
@@ -11,9 +11,9 @@ public class Partie {
 
 		Deck deckJoueur1 = new Deck("deck test");
 
-		CreatureCard.Effects[] pasDeffets = {Effects.FLYING,Effects.HASTE}; 
+		Card.Effects[] effets = {Effects.FLYING,Effects.HASTE}; 
 		for (int i = 0; i < 20; i++) {
-			deckJoueur1.push(new CreatureCard(Card.Colors.RED, "Gobelin", 2, 1, pasDeffets, 1, 1));
+			deckJoueur1.push(new Card(Card.Colors.RED, "Gobelin", false, 2, 1, effets, 1, 1));
 		}
 
 		System.out.println("Melange du deck...");
@@ -39,12 +39,10 @@ public class Partie {
 		joueur1.nouveauTour();
 		
 		//on cherche une créature dans la main pour la jouer
-		CreatureCard creatureAJouer = null;
+		Card creatureAJouer = null;
 		for (Card c : joueur1.getMain()) {
-			if (c instanceof CreatureCard) {
-				creatureAJouer = (CreatureCard) c;
-				break;
-			}
+			creatureAJouer = (Card) c;
+			break;
 		}
 		
 		if (creatureAJouer != null) {
@@ -52,8 +50,18 @@ public class Partie {
 		}
 		
 		System.out.println("COMBAT");
-		if (creatureAJouer != null) {
-			joueur1.attaquer(creatureAJouer, joueur2);
+		var attaquants = joueur1.attaquants();
+		var duels = joueur2.defendre(attaquants);
+		for (Card attaquant : attaquants) {
+			var attaqueReussie = true;
+			for (Pair<Card,Card> duel : duels) {
+				if (duel.contains(attaquant)) {
+					attaqueReussie = false;
+				}
+			}
+			if (attaqueReussie) {
+				joueur2.subirDegats(attaquant.getAtk());
+			}
 		}
 
 		

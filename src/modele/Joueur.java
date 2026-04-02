@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Joueur {
 	
@@ -29,6 +30,9 @@ public class Joueur {
 		if (this.manaMax < 10) {
 			this.manaMax += 1; 
 		}
+		for (Card carte : terrain) {
+			carte.setTapped(false);
+		}
 		this.reserveMana = this.manaMax; 
 		
 		System.out.println("debut du tour de " + this.nom);
@@ -54,8 +58,8 @@ public class Joueur {
 	public void jouerCarte(Card carte) {
 		if (!main.contains(carte)) return; 
 
-		if (carte instanceof CreatureCard) {
-			CreatureCard creature = (CreatureCard) carte; 
+		if (carte instanceof Card) {
+			Card creature = (Card) carte; 
 			int cout = creature.getTotalCost(); 
 			
 			if (this.reserveMana >= cout) {
@@ -68,20 +72,40 @@ public class Joueur {
 			}
 		}
 	}
-
-	public void attaquer(CreatureCard attaquant, Joueur adversaire) {
-		if (this.terrain.contains(attaquant) && !attaquant.isTapped()) {
-			
-			int degats = attaquant.getAtk();
-			adversaire.subirDegats(degats); 
-			attaquant.setTapped(true);      
-			
-			System.out.println(this.nom + " attaque avec une créature (" + degats + " ATK) !");
-			System.out.println(adversaire.getNom() + " subit " + degats + " dégâts. Il lui reste " + adversaire.getPointsDeVie() + " PV.");
-			
-		} else {
-			System.out.println("Impossible d'attaquer avec cette carte (pas sur le terrain ou déjà engagée)");
+	
+	public Card[] attaquants() {
+		var attaquants = new Card[this.terrain.size()];
+		var index = 0;
+		for (Card carte : terrain) {
+			if (carte instanceof Card) {
+				try (var scan = new Scanner(System.in)) {
+					System.out.println("Voulez vous attaquer avec la carte " + carte.getName() + "(y/n)");
+					var rep = scan.nextLine();
+					if (rep.equalsIgnoreCase("y")) {
+						attaquants[index] = (Card) carte;
+						index += 1;
+					}
+				}
+			}
 		}
+		return attaquants;
+	}
+	
+	public ArrayList<Pair<Card,Card>> defendre (Card[] attaquants) {
+		var defenses = new ArrayList<Pair<Card,Card>>();
+		for (Card attaquant : attaquants ) {
+			for (Card carte : terrain) {
+				if (terrain.size() > defenses.size()) {
+					var scan = new Scanner(System.in);
+					System.out.println("Voulez vous défendre la carte" + attaquant.getName() + " avec la carte " + carte.getName() + "(y/n)");
+					var rep = scan.nextLine();
+					if (rep.equalsIgnoreCase("y")) {
+						defenses.add(new Pair<Card,Card>(attaquant,carte));
+					}
+				}
+			}
+		}
+		return defenses;
 	}
 
 	public void subirDegats(int degats) {
