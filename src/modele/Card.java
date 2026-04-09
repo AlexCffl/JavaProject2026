@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.TreeSet;
+
 public class Card{
 	
 	private static final long serialVersionUID = 1L;
@@ -13,16 +15,18 @@ public class Card{
 	private boolean tapped;
 	private int atk;
 	private int def;
-	private Effects[] effects;
+	private TreeSet<Effects> effects;
 	private int tC;
 	private int cC;
+	private int pvPerdus;
 
-	public Card(Colors color, String name ,boolean tapped, int attack, int defense, Effects[] bonus, int totalCost, int colorCost) {
+	public Card(Colors color, String name ,boolean tapped, int attack, int defense, TreeSet<Effects> bonus, int totalCost, int colorCost) {
 		atk = attack;
 		def = defense;
 		effects = bonus;
 		tC = totalCost;
 		cC = colorCost;
+		pvPerdus = 0;
 	}
 
 	@Override
@@ -39,6 +43,11 @@ public class Card{
 		return obj.toString() == toString();
 	}
 	
+	public boolean subirDgts (int dmg) {
+		pvPerdus += dmg;
+		return pvPerdus < def;
+	}
+	
 	//Getters
 	public int getTotalCost() {return tC;}
 	public int getColorCost() {return cC;}
@@ -47,8 +56,10 @@ public class Card{
 	public Colors getColor() {return color;}
 	public boolean isTapped() {return tapped;}
 	public String getName() {return name;}
+	public TreeSet<Effects> getEffects() {return effects;}
 		
 	//Setters
+	public void setPvPerdus(int valeur) {pvPerdus = valeur;}
 	public void setTapped(boolean tapped) {this.tapped = tapped;}	
 	protected void setColor(Colors color) {this.color = color;}	
 	protected void setName(String name) {this.name = name;}

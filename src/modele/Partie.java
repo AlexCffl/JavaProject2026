@@ -1,17 +1,58 @@
 package modele;
 
 import java.io.File;
-
-import modele.Card.Effects;
+import java.util.TreeSet;
 
 public class Partie {
 
+	private Joueur j1;
+	private Joueur j2;
+	private boolean isOver;
+	
+	public Partie(Joueur j1, Joueur j2) {
+		this.j1 = j1;
+		this.j2 = j2;
+		isOver = false;
+	}
+	
+	public Pair<Pair<Boolean,Boolean>,Integer> combat1v1 (Card attaquant, Card defenseur) {
+		var attaquantSurvit = attaquant.subirDgts(defenseur.getAtk());
+		var defenseurSurvit = defenseur.subirDgts(attaquant.getAtk());
+		var survivants = new Pair<Boolean,Boolean>(attaquantSurvit,defenseurSurvit);
+		var extraDmg = 0;
+		if (attaquant.getEffects().contains(Card.Effects.TRAMPLE) && attaquant.getAtk()>defenseur.getDef()) {
+			extraDmg += attaquant.getAtk()-defenseur.getDef();
+		}
+		return new Pair<Pair<Boolean,Boolean>,Integer>(survivants,extraDmg);
+	}
+	
+	public void combat(Joueur attaquant, Joueur defenseur) {		
+		var attaquants = attaquant.attaquer();
+		var défenses = defenseur.defendre(attaquants);
+		var combats = défenses.getLeft();
+		var extraDmg = 0;
+		for (var combattants : combats) {
+			var résultats = combat1v1(combattants.getLeft(),combattants.getRight());
+			if (!résultats.getLeft().getLeft()) {
+				attaquant.perdreCarte(combattants.getLeft());
+			}
+			if (!résultats.getLeft().getRight()) {
+				defenseur.perdreCarte(combattants.getRight());
+			}
+			extraDmg += résultats.getRight();
+		}
+		for (var attaquantQuiPasse : défenses.getRight()) {
+			extraDmg += attaquantQuiPasse.getAtk();
+		}
+		defenseur.subirDegats(extraDmg);
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("initialisation de la partie");
 
 		Deck deckJoueur1 = new Deck("deck test");
 
-		Card.Effects[] effets = {Effects.FLYING,Effects.HASTE}; 
+		var effets = new TreeSet<Card.Effects>();  
 		for (int i = 0; i < 20; i++) {
 			deckJoueur1.push(new Card(Card.Colors.RED, "Gobelin", false, 2, 1, effets, 1, 1));
 		}
@@ -50,19 +91,7 @@ public class Partie {
 		}
 		
 		System.out.println("COMBAT");
-		var attaquants = joueur1.attaquants();
-		var duels = joueur2.defendre(attaquants);
-		for (Card attaquant : attaquants) {
-			var attaqueReussie = true;
-			for (Pair<Card,Card> duel : duels) {
-				if (duel.contains(attaquant)) {
-					attaqueReussie = false;
-				}
-			}
-			if (attaqueReussie) {
-				joueur2.subirDegats(attaquant.getAtk());
-			}
-		}
+		
 
 		
 		System.out.println("cartes restantes dans le deck : " + joueur1.getDeck().size());

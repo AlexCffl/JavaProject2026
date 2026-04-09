@@ -2,6 +2,7 @@ package modele;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Joueur {
 	
@@ -32,6 +33,7 @@ public class Joueur {
 		}
 		for (Card carte : terrain) {
 			carte.setTapped(false);
+			carte.setPvPerdus(0);
 		}
 		this.reserveMana = this.manaMax; 
 		
@@ -73,41 +75,55 @@ public class Joueur {
 		}
 	}
 	
-	public Card[] attaquants() {
+	public Card[] attaquer() {
 		var attaquants = new Card[this.terrain.size()];
 		var index = 0;
+		var scan = new Scanner(System.in);
 		for (Card carte : terrain) {
-			if (carte instanceof Card) {
-				try (var scan = new Scanner(System.in)) {
-					System.out.println("Voulez vous attaquer avec la carte " + carte.getName() + "(y/n)");
-					var rep = scan.nextLine();
-					if (rep.equalsIgnoreCase("y")) {
-						attaquants[index] = (Card) carte;
-						index += 1;
-					}
+			if (!carte.isTapped()) {
+				System.out.println("Voulez vous attaquer avec la carte " + carte.getName() + " (y/n)");
+				var rep = scan.nextLine();
+				if (rep.equalsIgnoreCase("y")) {
+					attaquants[index] = (Card) carte;
+					index += 1;
 				}
-			}
+			}			
 		}
+		scan.close();
 		return attaquants;
 	}
 	
-	public ArrayList<Pair<Card,Card>> defendre (Card[] attaquants) {
+	public Pair<ArrayList<Pair<Card,Card>>,ArrayList<Card>> defendre (Card[] attaquants) {
 		var defenses = new ArrayList<Pair<Card,Card>>();
+		var attaquantsNonBloques = new ArrayList<Card>();
+		var cartesOccupees = new TreeSet<Card>();
+		var scan = new Scanner(System.in);
 		for (Card attaquant : attaquants ) {
+			var estBloquee = false;
 			for (Card carte : terrain) {
-				if (terrain.size() > defenses.size()) {
-					var scan = new Scanner(System.in);
-					System.out.println("Voulez vous défendre la carte" + attaquant.getName() + " avec la carte " + carte.getName() + "(y/n)");
+				if (!carte.isTapped() && !cartesOccupees.contains(carte)) {
+					System.out.println("Voulez vous défendre la carte" + attaquant.getName() + " avec la carte " + carte.getName() + " (y/n)");
 					var rep = scan.nextLine();
 					if (rep.equalsIgnoreCase("y")) {
 						defenses.add(new Pair<Card,Card>(attaquant,carte));
+						cartesOccupees.add(carte);
+						estBloquee = true;
 					}
 				}
 			}
+			if (!estBloquee) {
+				attaquantsNonBloques.add(attaquant);
+			}
 		}
-		return defenses;
+		scan.close();
+		return new Pair<ArrayList<Pair<Card,Card>>,ArrayList<Card>>(defenses,attaquantsNonBloques);
 	}
 
+	public void perdreCarte(Card carte) {
+		terrain.remove(carte);
+		cimetiere.add(carte);
+	}
+	
 	public void subirDegats(int degats) {
 		this.pointsDeVie -= degats;
 	}
