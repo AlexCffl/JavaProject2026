@@ -1,6 +1,8 @@
 package modele;
 
-public class Pair<T, U> {
+import java.io.Serializable;
+
+public class Pair<T, U> implements Serializable {
     private T left;
     private U right;
 

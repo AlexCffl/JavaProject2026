@@ -1,8 +1,9 @@
 package modele;
 
 import java.util.TreeSet;
+import java.io.Serializable;
 
-public class Card{
+public class Card implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -21,6 +22,11 @@ public class Card{
 	private int pvPerdus;
 
 	public Card(Colors color, String name ,boolean tapped, int attack, int defense, TreeSet<Effects> bonus, int totalCost, int colorCost) {
+		
+		this.color = color;
+		this.name = name;
+		this.tapped = tapped;
+		
 		atk = attack;
 		def = defense;
 		effects = bonus;
@@ -38,10 +44,12 @@ public class Card{
 		return retour + '\n';
 	}
 
-	@Override
+	/*@Override
 	public boolean equals(Object obj) {
-		return obj.toString() == toString();
-	}
+		if (obj == null) return false;
+		return this.toString().equals(obj.toString());
+		
+	}*/
 	
 	public boolean subirDgts (int dmg) {
 		pvPerdus += dmg;

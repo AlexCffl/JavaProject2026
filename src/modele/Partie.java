@@ -1,6 +1,7 @@
 package modele;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class Partie {
@@ -13,6 +14,14 @@ public class Partie {
 		this.j1 = j1;
 		this.j2 = j2;
 		isOver = false;
+	}
+	
+	public Joueur getJ1() {
+	    return j1;
+	}
+
+	public Joueur getJ2() {
+	    return j2;
 	}
 	
 	public Pair<Pair<Boolean,Boolean>,Integer> combat1v1 (Card attaquant, Card defenseur) {
@@ -72,38 +81,64 @@ public class Partie {
 			System.out.println("carte " + (i + 1) + " : " + carteEnMain.toString().replace("\n", ""));
 		}
 		
+		
+		
 		Deck deckJoueur2 = new Deck("Deck Cible");
+		for (int i = 0; i < 20; i++) {
+			deckJoueur2.push(new Card(Card.Colors.BLUE, "Elfe", false, 1, 2, effets, 1, 1));
+		}
+		deckJoueur2.shuffle(); 
 		Joueur joueur2 = new Joueur("joeurX", deckJoueur2);
-
 		
-		//debut du tour (gagne 1 mana max, recharge la jauge, pioche 1 carte)
-		joueur1.nouveauTour();
-		
-		//on cherche une créature dans la main pour la jouer
-		Card creatureAJouer = null;
-		for (Card c : joueur1.getMain()) {
-			creatureAJouer = (Card) c;
-			break;
-		}
-		
-		if (creatureAJouer != null) {
-			joueur1.jouerCarte(creatureAJouer);
-		}
-		
-		System.out.println("COMBAT");
+		joueur2.piocherMainDeDepart();
+		Partie moteurPartie = new Partie(joueur1, joueur2);
+		int tour = 1;
+		System.out.println("debut de la bataille");
 		
 
+		while (joueur1.estVivant() && joueur2.estVivant()) {
+			System.out.println(" TOUR " + tour);
+			
+			joueur1.nouveauTour();
+			
+			if (!joueur1.getMain().isEmpty()) {
+				joueur1.jouerCarte(joueur1.getMain().get(0));
+			}
+			
+			System.out.println("> Phase d'attaque de " + joueur1.getNom());
+			moteurPartie.combat(joueur1, joueur2);
+			System.out.println("PV restants de " + joueur2.getNom() + " : " + joueur2.getPointsDeVie());
+			
+			if (!joueur2.estVivant()) {
+				break;
+			}
+			
+			joueur2.nouveauTour();
+			
+			if (!joueur2.getMain().isEmpty()) {
+				joueur2.jouerCarte(joueur2.getMain().get(0));
+			}
+			
+			System.out.println("> Phase d'attaque de " + joueur2.getNom());
+			moteurPartie.combat(joueur2, joueur1);
+			System.out.println("PV restants de " + joueur1.getNom() + " : " + joueur1.getPointsDeVie());
 		
-		System.out.println("cartes restantes dans le deck : " + joueur1.getDeck().size());
+			tour++;
+		}
+		System.out.println(" fin de la partie ! ");
 		
+		if (joueur1.estVivant()) {
+			System.out.println("   " + joueur1.getNom() + " a gagné !");
+		} else {
+			System.out.println("   " + joueur2.getNom() + " a gagné !");
+		}
+		
+		System.out.println("cartes restantes dans le deck J1 : " + joueur1.getDeck().size());	
 		var file = new File("testDeck.txt");
-		
-		//test de sauvegarde du deckJoueur1
 		deckJoueur1.serialize(file);
 		System.out.println("Deck sauvegardé dans " + file.getName());
-		
-		//on le recharge dans un nouveau deck pour prouver que ca marche
 		Deck deckRecharge = new Deck(file);
 		System.out.println("deck rechargé avec succès. il contient : " + deckRecharge.size() + " cartes.");
 	}
+	
 }

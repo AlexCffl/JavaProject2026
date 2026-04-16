@@ -75,8 +75,8 @@ public class Joueur {
 		}
 	}
 	
-	public Card[] attaquer() {
-		var attaquants = new Card[this.terrain.size()];
+	public ArrayList<Card> attaquer() {
+		var attaquants = new ArrayList<Card>();
 		var index = 0;
 		var scan = new Scanner(System.in);
 		for (Card carte : terrain) {
@@ -84,19 +84,17 @@ public class Joueur {
 				System.out.println("Voulez vous attaquer avec la carte " + carte.getName() + " (y/n)");
 				var rep = scan.nextLine();
 				if (rep.equalsIgnoreCase("y")) {
-					attaquants[index] = (Card) carte;
-					index += 1;
+					attaquants.add(carte);
 				}
 			}			
 		}
-		scan.close();
 		return attaquants;
 	}
 	
-	public Pair<ArrayList<Pair<Card,Card>>,ArrayList<Card>> defendre (Card[] attaquants) {
+	public Pair<ArrayList<Pair<Card,Card>>,ArrayList<Card>> defendre (ArrayList<Card> attaquants) {
 		var defenses = new ArrayList<Pair<Card,Card>>();
 		var attaquantsNonBloques = new ArrayList<Card>();
-		var cartesOccupees = new TreeSet<Card>();
+		var cartesOccupees = new ArrayList<Card>();
 		var scan = new Scanner(System.in);
 		for (Card attaquant : attaquants ) {
 			var estBloquee = false;
@@ -115,7 +113,6 @@ public class Joueur {
 				attaquantsNonBloques.add(attaquant);
 			}
 		}
-		scan.close();
 		return new Pair<ArrayList<Pair<Card,Card>>,ArrayList<Card>>(defenses,attaquantsNonBloques);
 	}
 
