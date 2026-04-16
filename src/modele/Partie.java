@@ -14,6 +14,8 @@ public class Partie {
 		this.j1 = j1;
 		this.j2 = j2;
 		isOver = false;
+		j1.piocherMainDeDepart();
+		j2.piocherMainDeDepart();
 	}
 	
 	public Joueur getJ1() {
@@ -59,13 +61,12 @@ public class Partie {
 	public static void main(String[] args) {
 		System.out.println("initialisation de la partie");
 
-		Deck deckJoueur1 = new Deck("deck test");
-
-		var effets = new TreeSet<Card.Effects>();  
-		for (int i = 0; i < 20; i++) {
-			deckJoueur1.push(new Card(Card.Colors.RED, "Gobelin", false, 2, 1, effets, 1, 1));
-		}
-
+		var effets = new TreeSet<Card.Effects>();
+		effets.add(Card.Effects.FLYING);
+		effets.add(Card.Effects.HASTE);
+		var cartes = new Card[1];
+		cartes[0] = new Card(Card.Colors.RED, "Gobelin", false, 2, 1, effets, 1, 1);
+		Deck deckJoueur1 = new Deck("deck test",cartes) ;
 		System.out.println("Melange du deck...");
 		deckJoueur1.shuffle();
 
@@ -82,11 +83,9 @@ public class Partie {
 		}
 		
 		
-		
-		Deck deckJoueur2 = new Deck("Deck Cible");
-		for (int i = 0; i < 20; i++) {
-			deckJoueur2.push(new Card(Card.Colors.BLUE, "Elfe", false, 1, 2, effets, 1, 1));
-		}
+		cartes = new Card[1];
+		cartes[0] = new Card(Card.Colors.BLUE, "Elfe", false, 1, 2, effets, 1, 1);
+		Deck deckJoueur2 = new Deck("Deck Cible",cartes);
 		deckJoueur2.shuffle(); 
 		Joueur joueur2 = new Joueur("joeurX", deckJoueur2);
 		

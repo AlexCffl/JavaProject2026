@@ -43,13 +43,6 @@ public class Card implements Serializable{
 		}
 		return retour + '\n';
 	}
-
-	/*@Override
-	public boolean equals(Object obj) {
-		if (obj == null) return false;
-		return this.toString().equals(obj.toString());
-		
-	}*/
 	
 	public boolean subirDgts (int dmg) {
 		pvPerdus += dmg;
