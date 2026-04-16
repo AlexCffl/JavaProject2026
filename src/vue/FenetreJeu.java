@@ -17,10 +17,13 @@ public class FenetreJeu extends JFrame {
 	private JLabel labelPvAdversaire;
     private JLabel labelPvJoueur;
     private JButton boutonFinDeTour;
+    private JPanel panelMainJoueur;
+    private JPanel panelTerrainAdversaire;
+    private JPanel panelTerrainJoueur;
 
     public FenetreJeu() {
         this.setTitle("plateau");
-        this.setSize(900, 700);
+        this.setSize(1100, 850);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
@@ -34,17 +37,39 @@ public class FenetreJeu extends JFrame {
         panelAdversaire.add(labelPvAdversaire);
         
         JPanel panelJoueur = new JPanel();
+        panelJoueur.setLayout(new BorderLayout());
         panelJoueur.setBackground(new Color(50, 100, 150)); 
         labelPvJoueur = new JLabel("Joueur 1 : 20 PV | Mana : 1/1");
         labelPvJoueur.setForeground(Color.WHITE);
         labelPvJoueur.setFont(new Font("Arial", Font.BOLD, 20));
-        panelJoueur.add(labelPvJoueur);
+        panelJoueur.add(labelPvJoueur, BorderLayout.NORTH);
 
+        panelMainJoueur = new JPanel();
+        panelMainJoueur.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        panelMainJoueur.setOpaque(false);
+        panelJoueur.add(panelMainJoueur, BorderLayout.CENTER);
+        
         JPanel panelPlateau = new JPanel();
+        panelPlateau.setLayout(new GridLayout(2, 1));
+        
+        panelTerrainAdversaire = new JPanel();
+        panelTerrainAdversaire.setLayout(new FlowLayout(FlowLayout.CENTER, 20,20));
+        panelTerrainAdversaire.setBackground(new Color(60, 40, 40));
+        panelTerrainAdversaire.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Ligne de front adverse", 0, 0, new Font("Arial", Font.BOLD, 14),Color.LIGHT_GRAY));
+        
+        panelTerrainJoueur = new JPanel();
+        panelTerrainJoueur.setLayout(new FlowLayout(FlowLayout.CENTER, 20,20));
+        panelTerrainJoueur.setBackground(new Color(40, 60, 80));
+        panelTerrainJoueur.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Votre ligne de front", 0, 0, new Font("Arial", Font.BOLD, 14),Color.LIGHT_GRAY));
+        panelPlateau.add(panelTerrainAdversaire);
+        panelPlateau.add(panelTerrainJoueur);
+        this.add(panelPlateau, BorderLayout.CENTER);
+        
+        /*JPanel panelPlateau = new JPanel();
         panelPlateau.setBackground(new Color(40, 40, 40)); 
         JLabel textePlateau = new JLabel("endroit pour lescartes");
         textePlateau.setForeground(Color.LIGHT_GRAY);
-        panelPlateau.add(textePlateau);
+        panelPlateau.add(textePlateau);*/
 
         JPanel panelActions = new JPanel();
         panelActions.setLayout(new GridLayout(3, 1, 10, 10));
@@ -74,18 +99,38 @@ public class FenetreJeu extends JFrame {
 
         FenetreJeu maVue = new FenetreJeu();
 
-        var uneCarte = new CarteGraphique(j1.getMain().getFirst());
-        maVue.add(uneCarte);
+        
         new ControleurJeu(monModele, maVue);
-
+        maVue.actualiser(monModele.getJ1(), monModele.getJ2());
         maVue.setVisible(true);
                 
     }
     
     public void actualiser(Joueur j1, Joueur j2) {
-        labelPvJoueur.setText(j1.getNom() + " : " + j1.getPointsDeVie() + " PV");
+        labelPvJoueur.setText(j1.getNom() + " : " + j1.getPointsDeVie() + " PV | Mana : " + j1.getReserveMana()+ "/" + j1.getManaMax());
         labelPvAdversaire.setText(j2.getNom() + " : " + j2.getPointsDeVie() + " PV");
-    }
+        panelMainJoueur.removeAll();
+        for (Card c : j1.getMain()) {
+        	panelMainJoueur.add(new CarteGraphique(c));
+        }
+        
+        panelTerrainJoueur.removeAll();
+        for (Card c : j1.getMain()) {
+        	panelTerrainJoueur.add(new CarteGraphique(c));
+        }
+        
+        panelTerrainAdversaire.removeAll();
+        for (Card c : j1.getMain()) {
+        	panelTerrainAdversaire.add(new CarteGraphique(c));
+        }
+        
+        panelMainJoueur.revalidate();
+        panelMainJoueur.repaint();
+        panelTerrainJoueur.revalidate();
+        panelTerrainJoueur.repaint();
+        panelTerrainAdversaire.revalidate();
+        panelTerrainAdversaire.repaint();
+        }
 
     public JButton getBoutonFinDeTour() {
         return boutonFinDeTour;

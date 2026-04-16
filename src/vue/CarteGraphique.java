@@ -1,12 +1,18 @@
 package vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.Iterator;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.border.LineBorder;
+
+import modele.Card;
 
 public class CarteGraphique extends JPanel {
 
@@ -23,6 +29,9 @@ public class CarteGraphique extends JPanel {
 		super();
 		layout = new BorderLayout();
 		this.setLayout(layout);
+		
+		this.setPreferredSize(new Dimension(120, 200));
+		this.setBorder(new LineBorder(Color.BLACK, 2));
 		
 		var barreDuBas = new JPanel(new BorderLayout());		
 		zoneAtk = new JPanel();
@@ -47,10 +56,16 @@ public class CarteGraphique extends JPanel {
 		zoneImage = new JPanel();
 		grille[0] = zoneImage;
 		zoneEffets = new JTextArea();
-		for (var effet : carte.toString().split("|")[6].split(":")[1].split(",")) {
-			zoneEffets.setText(zoneEffets.getText()+", "+effet);
+		
+		StringBuilder texteEffets = new StringBuilder();
+		for (modele.Card.Effects effet : carte.getEffects()) {
+			texteEffets.append(effet.toString()).append(" ");
 		}
-		zoneEffets.setText(zoneEffets.getText().replaceFirst(",", ""));
+		
+		zoneEffets.setText(texteEffets.toString());
+		zoneEffets.setEditable(false);
+		zoneEffets.setLineWrap(true);
+		zoneEffets.setWrapStyleWord(true);
 		grille[1] = zoneEffets;
 		for (var comp : grille) {
 			milieu.add(comp);
