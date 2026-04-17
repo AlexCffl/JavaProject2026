@@ -17,9 +17,11 @@ public class FenetreJeu extends JFrame {
 	private JLabel labelPvAdversaire;
     private JLabel labelPvJoueur;
     private JButton boutonFinDeTour;
+    private JButton boutonAttaquer;
     private JPanel panelMainJoueur;
     private JPanel panelTerrainAdversaire;
     private JPanel panelTerrainJoueur;
+    private ControleurJeu controleur;
 
     public FenetreJeu() {
         this.setTitle("plateau");
@@ -78,11 +80,21 @@ public class FenetreJeu extends JFrame {
         boutonFinDeTour = new JButton("passer le tour");
         boutonFinDeTour.setFont(new Font("Arial", Font.BOLD, 16));
         panelActions.add(boutonFinDeTour); 
+        
+        boutonAttaquer = new JButton("Attaquer !");
+        boutonAttaquer.setFont(new Font("Arial", Font.BOLD, 16));
+        boutonAttaquer.setBackground(new Color(200, 50, 50));
+        boutonAttaquer.setForeground(Color.WHITE);
+        panelActions.add(boutonAttaquer);
 
         this.add(panelAdversaire, BorderLayout.NORTH);
         this.add(panelJoueur, BorderLayout.SOUTH);
         this.add(panelPlateau, BorderLayout.CENTER);
         this.add(panelActions, BorderLayout.EAST);
+    }
+    
+    public void setControleur(ControleurJeu controleur) {
+    	this.controleur = controleur;
     }
 
     public static void main(String[] args) {
@@ -90,11 +102,12 @@ public class FenetreJeu extends JFrame {
     	effets.add(Card.Effects.TRAMPLE);
     	var decklist = new Card[20];
     	for (int i = 0; i<20;i++) {
-    		decklist[i] = new Card(Card.Colors.BLUE, "Elfe", false, 1, 2, effets, 1, 1);
+    		decklist[i] = new Card(Card.Colors.BLUE, "Elfe", false, 3, 2, effets, 1, 1);
     	}
     	Deck d1 = new Deck("Deck J1",decklist);
         Joueur j1 = new Joueur("JoueurA", d1);
         Joueur j2 = new Joueur("JoueurX", new Deck("Deck J2",decklist));
+        j2.getTerrain().add(new Card(Card.Colors.BLUE, "gobelin", false, 1, 2,effets,1, 1));
         Partie monModele = new Partie(j1, j2);
 
         FenetreJeu maVue = new FenetreJeu();
@@ -107,21 +120,59 @@ public class FenetreJeu extends JFrame {
     }
     
     public void actualiser(Joueur j1, Joueur j2) {
-        labelPvJoueur.setText(j1.getNom() + " : " + j1.getPointsDeVie() + " PV | Mana : " + j1.getReserveMana()+ "/" + j1.getManaMax());
-        labelPvAdversaire.setText(j2.getNom() + " : " + j2.getPointsDeVie() + " PV");
+        labelPvJoueur.setText(j1.getNom() + " : " + j1.getPointsDeVie() + " PV | Mana : " + j1.getReserveMana()+ "/" + j1.getManaMax() + " | cimetiere : " + j1.getCimetiere().size() + " | Deck : "+ j1.getDeck().size());
+        labelPvAdversaire.setText(j2.getNom() + " : " + j2.getPointsDeVie() + " PV | cimetiere : " + j2.getCimetiere().size()+ " | Deck : "+ j2.getDeck().size());
         panelMainJoueur.removeAll();
         for (Card c : j1.getMain()) {
-        	panelMainJoueur.add(new CarteGraphique(c));
+        	CarteGraphique vueCarte = new CarteGraphique(c);
+        
+        	if (this.controleur != null) {
+        		if (c == controleur.getAttaquantSelectionne()) {
+                    vueCarte.setBorder(BorderFactory.createLineBorder(Color.RED, 4));
+                }
+        		vueCarte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        		vueCarte.addMouseListener(new java.awt.event.MouseAdapter() {
+        			@Override
+        			public void mouseClicked(java.awt.event.MouseEvent e) {
+        				controleur.jouerCarte(c);
+        			}
+        		});
+        	}
+        	panelMainJoueur.add(vueCarte);
         }
         
         panelTerrainJoueur.removeAll();
-        for (Card c : j1.getMain()) {
-        	panelTerrainJoueur.add(new CarteGraphique(c));
+        for (Card c : j1.getTerrain()) {
+        	CarteGraphique vueCarte = new CarteGraphique(c);
+        	if (this.controleur != null) {
+        		if (c == controleur.getAttaquantSelectionne()) {
+                    vueCarte.setBorder(BorderFactory.createLineBorder(Color.RED, 4));
+                }
+                vueCarte.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
+                vueCarte.addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        controleur.clicSurCarteTerrain(c, true);
+                    }
+                });
+            }
+            panelTerrainJoueur.add(vueCarte);
         }
+       
         
         panelTerrainAdversaire.removeAll();
-        for (Card c : j1.getMain()) {
-        	panelTerrainAdversaire.add(new CarteGraphique(c));
+        for (Card c : j2.getTerrain()) {
+        	CarteGraphique vueCarte = new CarteGraphique(c);
+        	if (this.controleur != null) {
+                vueCarte.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
+                vueCarte.addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        controleur.clicSurCarteTerrain(c, false);
+                    }
+                });
+            }
+            panelTerrainAdversaire.add(vueCarte);
         }
         
         panelMainJoueur.revalidate();
@@ -134,5 +185,8 @@ public class FenetreJeu extends JFrame {
 
     public JButton getBoutonFinDeTour() {
         return boutonFinDeTour;
+    }
+    public JButton getBoutonAttaquer() {
+        return boutonAttaquer;
     }
 }

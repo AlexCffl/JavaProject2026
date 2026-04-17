@@ -139,4 +139,6 @@ public class Joueur {
 	public ArrayList<Card> getCimetiere() { return cimetiere;}
 	public int getReserveMana() { return reserveMana;}
 	public int getManaMax() { return manaMax;}
+	
+
 }
