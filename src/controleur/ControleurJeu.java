@@ -26,15 +26,15 @@ public class ControleurJeu {
 
     public void poursuivrePartie() {
         System.out.println("clic controleur reçu, passage au tour suivant");
-        
-        modele.getJ1().nouveauTour();
-        vue.actualiser(modele.getJ1(), modele.getJ2());
+
+        attaquantSelectionne = null;
+        modele.passerAuTourSuivant();
+        vue.actualiser(modele.getJoueurCourant(), modele.getJoueurAdverse());
     }
-    
     public void jouerCarte(Card carte) {
     	System.out.println("tentative de jouer la carte : " + carte.getName());
-    	modele.getJ1().jouerCarte(carte);
-    	vue.actualiser(modele.getJ1(), modele.getJ2());
+    	modele.getJoueurCourant().jouerCarte(carte);
+    	vue.actualiser(modele.getJoueurCourant(), modele.getJoueurAdverse());
     }
     
     public void lancerAssaut() {
@@ -47,7 +47,7 @@ public class ControleurJeu {
         }
         if (degatsTotaux > 0) {
             System.out.println("Assaut! " + degatsTotaux + " degats infligés");
-            modele.getJ2().subirDegats(degatsTotaux);
+            modele.getJoueurAdverse().subirDegats(degatsTotaux);
         } else {
             System.out.println("aucune carte disponible pour attaquer !");
         }
@@ -62,7 +62,7 @@ public class ControleurJeu {
             } else {
                 System.out.println("cette carte est épuisée pour ce tour !");
             }
-            vue.actualiser(modele.getJ1(), modele.getJ2());
+            vue.actualiser(modele.getJoueurCourant(), modele.getJoueurAdverse());
             
         } else {
             if (attaquantSelectionne != null) {
@@ -72,14 +72,14 @@ public class ControleurJeu {
                 
                 if (defRestante <= 0) {
                     System.out.println(carteCliquee.getName() + " adverse est detruite");
-                    modele.getJ2().perdreCarte(carteCliquee); 
+                    modele.getJoueurAdverse().perdreCarte(carteCliquee);
                 } else {
                     System.out.println("la carte adverse survit");
                 }
                 attaquantSelectionne.setTapped(true);
                 attaquantSelectionne = null; 
                 
-                vue.actualiser(modele.getJ1(), modele.getJ2());
+                vue.actualiser(modele.getJoueurCourant(), modele.getJoueurAdverse());
             }
         }
     }

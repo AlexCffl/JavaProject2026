@@ -87,7 +87,6 @@ public class Joueur {
 				}
 			}			
 		}
-		scan.close();
 		return attaquants;
 	}
 	
@@ -113,7 +112,7 @@ public class Joueur {
 				attaquantsNonBloques.add(attaquant);
 			}
 		}
-		scan.close();
+		
 		return new Pair<ArrayList<Pair<Card,Card>>,ArrayList<Card>>(defenses,attaquantsNonBloques);
 	}
 

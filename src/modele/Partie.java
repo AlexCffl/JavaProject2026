@@ -8,12 +8,16 @@ public class Partie {
 
 	private Joueur j1;
 	private Joueur j2;
+	private Joueur joueurCourant;
+	private Joueur joueurAdverse;
 	private boolean isOver;
 	
 	public Partie(Joueur j1, Joueur j2) {
 		this.j1 = j1;
 		this.j2 = j2;
 		isOver = false;
+		this.joueurCourant=j1;
+		this.joueurAdverse=j2;
 		j1.piocherMainDeDepart();
 		j2.piocherMainDeDepart();
 	}
@@ -25,7 +29,21 @@ public class Partie {
 	public Joueur getJ2() {
 	    return j2;
 	}
-	
+	public Joueur getJoueurCourant() {
+		return joueurCourant;
+	}
+	public Joueur getJoueurAdverse() {
+		return joueurAdverse ;
+	}
+	public void demerrerTour() {
+		joueurCourant.nouveauTour();
+	}
+	public void passerAuTourSuivant() {
+		Joueur temp = joueurCourant;
+		joueurCourant = joueurAdverse;
+		joueurAdverse = temp;
+		joueurCourant.nouveauTour();
+	}
 	public Pair<Pair<Boolean,Boolean>,Integer> combat1v1 (Card attaquant, Card defenseur) {
 		var attaquantSurvit = attaquant.subirDgts(defenseur.getAtk());
 		var defenseurSurvit = defenseur.subirDgts(attaquant.getAtk());
@@ -64,33 +82,36 @@ public class Partie {
 		var effets = new TreeSet<Card.Effects>();
 		effets.add(Card.Effects.FLYING);
 		effets.add(Card.Effects.HASTE);
-		var cartes = new Card[1];
-		cartes[0] = new Card(Card.Colors.RED, "Gobelin", false, 2, 1, effets, 1, 1);
-		Deck deckJoueur1 = new Deck("deck test",cartes) ;
+		Card[] cartesJoueur1=new Card[20];
+		for(int i=0;i<cartesJoueur1.length; i++) {
+			cartesJoueur1[i]=new Card(Card.Colors.RED, "Gobelin", false, 2, 1, effets, 1, 1);
+		}
+		Deck deckJoueur1 = new Deck("deck test", cartesJoueur1);
 		System.out.println("Melange du deck...");
 		deckJoueur1.shuffle();
 
 		Joueur joueur1 = new Joueur("JoueurA", deckJoueur1);
 		System.out.println("Joueur " + joueur1.getNom() + " créé avec " + joueur1.getPointsDeVie() + " PV.");
 
-		System.out.println(joueur1.getNom() + " pioche ses 7 cartes...");
-		joueur1.piocherMainDeDepart();
 
+
+		
+		
+		
+		Card[] cartesJoueur2 = new Card[20];
+		for (int i = 0; i < cartesJoueur2.length; i++) {
+		    cartesJoueur2[i] = new Card(Card.Colors.BLUE, "Elfe", false, 1, 2, effets, 1, 1);
+		}
+		Deck deckJoueur2 = new Deck("Deck Cible", cartesJoueur2);
+		deckJoueur2.shuffle(); 
+		Joueur joueur2 = new Joueur("joeurX", deckJoueur2);
+		
+		Partie moteurPartie = new Partie(joueur1, joueur2);
 		System.out.println(" main de depart de " + joueur1.getNom().toUpperCase() );
 		for (int i = 0; i < joueur1.getMain().size(); i++) {
 			Card carteEnMain = joueur1.getMain().get(i);
 			System.out.println("carte " + (i + 1) + " : " + carteEnMain.toString().replace("\n", ""));
 		}
-		
-		
-		cartes = new Card[1];
-		cartes[0] = new Card(Card.Colors.BLUE, "Elfe", false, 1, 2, effets, 1, 1);
-		Deck deckJoueur2 = new Deck("Deck Cible",cartes);
-		deckJoueur2.shuffle(); 
-		Joueur joueur2 = new Joueur("joeurX", deckJoueur2);
-		
-		joueur2.piocherMainDeDepart();
-		Partie moteurPartie = new Partie(joueur1, joueur2);
 		int tour = 1;
 		System.out.println("debut de la bataille");
 		
