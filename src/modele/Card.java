@@ -3,13 +3,13 @@ package modele;
 import java.util.TreeSet;
 import java.io.Serializable;
 
-public class Card implements Serializable{
+public class Card implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public enum Effects {TRAMPLE,HASTE,FLYING};
+	public enum Effects {TRAMPLE, HASTE, FLYING};
 	
-	public enum Colors {RED,WHITE,GREEN,BLUE,DARK,NONE};
+	public enum Colors {RED, WHITE, GREEN, BLUE, DARK, NONE};
 
 	private Colors color;
 	private String name;
@@ -21,7 +21,11 @@ public class Card implements Serializable{
 	private int cC;
 	private int pvPerdus;
 
-	public Card(Colors color, String name ,boolean tapped, int attack, int defense, TreeSet<Effects> bonus, int totalCost, int colorCost) {
+
+	private boolean peutAttaquer;
+
+	public Card(Colors color, String name, boolean tapped, int attack, int defense,
+			TreeSet<Effects> bonus, int totalCost, int colorCost) {
 		
 		this.color = color;
 		this.name = name;
@@ -33,36 +37,48 @@ public class Card implements Serializable{
 		tC = totalCost;
 		cC = colorCost;
 		pvPerdus = 0;
+
+		
+		peutAttaquer = false;
 	}
 
 	@Override
 	public String toString() {
-		String retour = "Color : " + color + " | nom : " + name + " | tapped : " + tapped + " | attack : " + atk + " | defense : " + def + " | cost : " + (tC-cC) + "+" + cC + " | effects : ";
+		String retour = "Color : " + color + " | nom : " + name + " | tapped : " + tapped
+				+ " | attack : " + atk + " | defense : " + def
+				+ " | cost : " + (tC - cC) + "+" + cC + " | effects : ";
 		for (var effect : effects) {
 			retour += effect + ",";
 		}
 		return retour + '\n';
 	}
 	
-	public boolean subirDgts (int dmg) {
+	public boolean subirDgts(int dmg) {
 		pvPerdus += dmg;
 		return pvPerdus < def;
 	}
 	
-	//Getters
-	public int getTotalCost() {return tC;}
-	public int getColorCost() {return cC;}
-	public int getAtk() {return atk;}
-	public int getDef() {return def;}
-	public Colors getColor() {return color;}
-	public boolean isTapped() {return tapped;}
-	public String getName() {return name;}
-	public TreeSet<Effects> getEffects() {return effects;}
-		
-	//Setters
-	public void setPvPerdus(int valeur) {pvPerdus = valeur;}
-	public void setTapped(boolean tapped) {this.tapped = tapped;}	
-	protected void setColor(Colors color) {this.color = color;}	
-	protected void setName(String name) {this.name = name;}
+	
+	public int getTotalCost() { return tC; }
+	public int getColorCost() { return cC; }
+	public int getAtk() { return atk; }
+	public int getDef() { return def; }
+	public Colors getColor() { return color; }
+	public boolean isTapped() { return tapped; }
+	public String getName() { return name; }
+	public TreeSet<Effects> getEffects() { return effects; }
 
+	
+	public boolean isPeutAttaquer() { return peutAttaquer; }
+	
+	
+	public void setPvPerdus(int valeur) { pvPerdus = valeur; }
+	public void setTapped(boolean tapped) { this.tapped = tapped; }
+	protected void setColor(Colors color) { this.color = color; }
+	protected void setName(String name) { this.name = name; }
+
+	
+	public void setPeutAttaquer(boolean peutAttaquer) {
+		this.peutAttaquer = peutAttaquer;
+	}
 }

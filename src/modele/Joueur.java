@@ -1,7 +1,6 @@
 package modele;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Joueur {
 	
@@ -25,7 +24,6 @@ public class Joueur {
 		this.manaMax = 0;
 	}
 	
-	
 	public void nouveauTour() {
 		if (this.manaMax < 10) {
 			this.manaMax += 1; 
@@ -33,6 +31,7 @@ public class Joueur {
 		for (Card carte : terrain) {
 			carte.setTapped(false);
 			carte.setPvPerdus(0);
+			carte.setPeutAttaquer(true);
 		}
 		this.reserveMana = this.manaMax; 
 		
@@ -59,61 +58,23 @@ public class Joueur {
 	public void jouerCarte(Card carte) {
 		if (!main.contains(carte)) return; 
 
-		if (carte instanceof Card) {
-			Card creature = (Card) carte; 
-			int cout = creature.getTotalCost(); 
+		int cout = carte.getTotalCost(); 
 			
-			if (this.reserveMana >= cout) {
-				this.reserveMana -= cout; 
-				main.remove(carte);
-				terrain.add(carte);
-				System.out.println(this.nom + " invoque une créature en payant " + cout + " mana ! (Reste: " + this.reserveMana);
+		if (this.reserveMana >= cout) {
+			this.reserveMana -= cout; 
+			main.remove(carte);
+
+			if (carte.getEffects().contains(Card.Effects.HASTE)) {
+				carte.setPeutAttaquer(true);
 			} else {
-				System.out.println(this.nom + " n'a pas assez de mana (" + this.reserveMana + "/" + cout + ") pour la jouer !");
+				carte.setPeutAttaquer(false);
 			}
+
+			terrain.add(carte);
+			System.out.println(this.nom + " invoque une créature en payant " + cout + " mana ! (Reste: " + this.reserveMana + ")");
+		} else {
+			System.out.println(this.nom + " n'a pas assez de mana (" + this.reserveMana + "/" + cout + ") pour la jouer !");
 		}
-	}
-	
-	public ArrayList<Card> attaquer() {
-		var attaquants = new ArrayList<Card>();
-		var index = 0;
-		var scan = new Scanner(System.in);
-		for (Card carte : terrain) {
-			if (!carte.isTapped()) {
-				System.out.println("Voulez vous attaquer avec la carte " + carte.getName() + " (y/n)");
-				var rep = scan.nextLine();
-				if (rep.equalsIgnoreCase("y")) {
-					attaquants.add(carte);
-				}
-			}			
-		}
-		return attaquants;
-	}
-	
-	public Pair<ArrayList<Pair<Card,Card>>,ArrayList<Card>> defendre (ArrayList<Card> attaquants) {
-		var defenses = new ArrayList<Pair<Card,Card>>();
-		var attaquantsNonBloques = new ArrayList<Card>();
-		var cartesOccupees = new ArrayList<Card>();
-		var scan = new Scanner(System.in);
-		for (Card attaquant : attaquants ) {
-			var estBloquee = false;
-			for (Card carte : terrain) {
-				if (!carte.isTapped() && !cartesOccupees.contains(carte)) {
-					System.out.println("Voulez vous défendre la carte" + attaquant.getName() + " avec la carte " + carte.getName() + " (y/n)");
-					var rep = scan.nextLine();
-					if (rep.equalsIgnoreCase("y")) {
-						defenses.add(new Pair<Card,Card>(attaquant,carte));
-						cartesOccupees.add(carte);
-						estBloquee = true;
-					}
-				}
-			}
-			if (!estBloquee) {
-				attaquantsNonBloques.add(attaquant);
-			}
-		}
-		
-		return new Pair<ArrayList<Pair<Card,Card>>,ArrayList<Card>>(defenses,attaquantsNonBloques);
 	}
 
 	public void perdreCarte(Card carte) {
@@ -129,15 +90,13 @@ public class Joueur {
 		return this.pointsDeVie > 0;
 	}
 	
-	// Getters
-	public String getNom() { return nom;}
-	public int getPointsDeVie() { return pointsDeVie;}
-	public Deck getDeck() { return deck; }
-	public ArrayList<Card> getMain() { return main;}
-	public ArrayList<Card> getTerrain() { return terrain;}
-	public ArrayList<Card> getCimetiere() { return cimetiere;}
-	public int getReserveMana() { return reserveMana;}
-	public int getManaMax() { return manaMax;}
 	
-
+	public String getNom() { return nom; }
+	public int getPointsDeVie() { return pointsDeVie; }
+	public Deck getDeck() { return deck; }
+	public ArrayList<Card> getMain() { return main; }
+	public ArrayList<Card> getTerrain() { return terrain; }
+	public ArrayList<Card> getCimetiere() { return cimetiere; }
+	public int getReserveMana() { return reserveMana; }
+	public int getManaMax() { return manaMax; }
 }
