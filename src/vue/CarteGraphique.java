@@ -49,7 +49,7 @@ public class CarteGraphique extends JPanel {
 		zoneMana = new JPanel();
 		zoneMana.add(new JLabel(carte.getTotalCost()+" dont "+carte.getColorCost()+" "+carte.getColor()));
 		barreDuHaut.add(zoneMana,BorderLayout.EAST);
-		this.add(barreDuHaut);
+		this.add(barreDuHaut, BorderLayout.NORTH);
 		
 		var milieu = new JPanel(new GridLayout(2,0,0,0));
 		var grille = new Component[2];
@@ -70,6 +70,6 @@ public class CarteGraphique extends JPanel {
 		for (var comp : grille) {
 			milieu.add(comp);
 		}
-		this.add(milieu);		
+		this.add(milieu, BorderLayout.CENTER);		
 	}
 }

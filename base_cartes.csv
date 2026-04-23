@@ -1,0 +1,10 @@
+Nom;Couleur;CoutTotal;CoutCouleur;Attaque;Defense;Effets
+
+Gobelin;RED;1;1;2;1;HASTE
+Elfe;BLUE;2;1;1;2;
+Dragon;RED;6;2;5;5;FLYING,TRAMPLE
+Chevalier;WHITE;3;1;3;3;
+Ange Gardien;WHITE;5;2;4;4;FLYING
+Troll;GREEN;4;1;4;3;TRAMPLE
+Loup;GREEN;2;1;3;1;HASTE
+Demon;DARK;7;3;6;6;FLYING,TRAMPLE

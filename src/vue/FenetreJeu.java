@@ -131,17 +131,18 @@ public class FenetreJeu extends JFrame {
     }
 
     public static void main(String[] args) {
-        var effets = new TreeSet<Card.Effects>();
-        effets.add(Card.Effects.TRAMPLE);
-
+    	java.util.ArrayList<Card> catalogue = modele.BibliothequeCartes.chargerCartesDepuisCSV("base_cartes.csv");
+        
+        java.util.Random rand = new java.util.Random();
         Card[] decklist1 = new Card[20];
-        for (int i = 0; i < 20; i++) {
-            decklist1[i] = new Card(Card.Colors.BLUE, "Elfe", false, 3, 2, effets, 1, 1);
-        }
-
         Card[] decklist2 = new Card[20];
+        
         for (int i = 0; i < 20; i++) {
-            decklist2[i] = new Card(Card.Colors.BLUE, "Elfe", false, 3, 2, effets, 1, 1);
+        	Card modeleJ1 = catalogue.get(rand.nextInt(catalogue.size()));
+            decklist1[i] = new Card(modeleJ1.getColor(), modeleJ1.getName(), false, modeleJ1.getAtk(), modeleJ1.getDef(), new TreeSet<>(modeleJ1.getEffects()), modeleJ1.getTotalCost(), modeleJ1.getColorCost());
+
+            Card modeleJ2 = catalogue.get(rand.nextInt(catalogue.size()));
+            decklist2[i] = new Card(modeleJ2.getColor(), modeleJ2.getName(), false, modeleJ2.getAtk(), modeleJ2.getDef(), new TreeSet<>(modeleJ2.getEffects()), modeleJ2.getTotalCost(), modeleJ2.getColorCost());
         }
 
         Deck d1 = new Deck("Deck J1", decklist1);

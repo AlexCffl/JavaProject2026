@@ -50,6 +50,8 @@ public class EcranDemarrage extends JDialog {
         boutonCommencer.setBackground(new Color(200, 50, 50));
         boutonCommencer.setForeground(Color.WHITE);
         boutonCommencer.setFocusPainted(false);
+        boutonCommencer.setOpaque(true);
+        boutonCommencer.setBorderPainted(false);
 
         boutonCommencer.addActionListener(e -> {
             commencer = true;
