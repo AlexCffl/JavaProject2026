@@ -11,7 +11,7 @@ public class EcranDemarrage extends JDialog {
     public EcranDemarrage(JFrame parent) {
         super(parent, "Début de partie", true);
 
-        setSize(600, 350);
+        setSize(600, 400);
         setLocationRelativeTo(parent);
         setResizable(false);
         setLayout(new BorderLayout());
@@ -45,6 +45,17 @@ public class EcranDemarrage extends JDialog {
         texte.setFont(new Font("Arial", Font.PLAIN, 16));
         texte.setMargin(new Insets(10, 30, 10, 30));
 
+        JButton boutonBiblio = new JButton("Voir la Bibliothèque");boutonBiblio.setFont(new Font("Arial", Font.BOLD, 14));
+        boutonBiblio.setFocusPainted(false);
+        boutonBiblio.setOpaque(true);
+        boutonBiblio.setBorderPainted(false);
+        
+        boutonBiblio.addActionListener(e -> {
+            java.util.ArrayList<modele.Card> catalogue = modele.BibliothequeCartes.chargerCartesDepuisCSV("base_cartes.csv");
+            EcranBibliotheque biblio = new EcranBibliotheque(parent, catalogue);
+            biblio.setVisible(true);
+        });
+        
         JButton boutonCommencer = new JButton("Commencer la partie");
         boutonCommencer.setFont(new Font("Arial", Font.BOLD, 18));
         boutonCommencer.setBackground(new Color(200, 50, 50));
@@ -68,6 +79,9 @@ public class EcranDemarrage extends JDialog {
         bas.setBorder(BorderFactory.createEmptyBorder(10, 10, 25, 10));
         bas.add(boutonCommencer);
 
+        bas.add(boutonBiblio); 
+        bas.add(Box.createHorizontalStrut(20)); 
+        bas.add(boutonCommencer);
         fond.add(titre, BorderLayout.NORTH);
         fond.add(centre, BorderLayout.CENTER);
         fond.add(bas, BorderLayout.SOUTH);
