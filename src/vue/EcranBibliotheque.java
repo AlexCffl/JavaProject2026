@@ -45,16 +45,11 @@ public class EcranBibliotheque extends JDialog {
         boutonRechercher.addActionListener(e -> appliquerFiltres());
         appliquerFiltres();
     }
-
     private void appliquerFiltres() {
         panelGrilleCartes.removeAll(); 
-        
         String couleurChoisie = (String) filtreCouleur.getSelectedItem();
-
         for (Card c : catalogueComplet) {
-            boolean correspondCouleur = couleurChoisie.equals("TOUTES") || c.getColor().name().equals(couleurChoisie);
-            
-
+            boolean correspondCouleur = couleurChoisie.equals("TOUTES") || c.getColor().name().equals(couleurChoisie); 
             if (correspondCouleur) {
                 panelGrilleCartes.add(new CarteGraphique(c));
             }

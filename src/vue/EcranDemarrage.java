@@ -68,7 +68,6 @@ public class EcranDemarrage extends JDialog {
             commencer = true;
             dispose();
         });
-
         JPanel centre = new JPanel(new BorderLayout());
         centre.setOpaque(false);
         centre.add(sousTitre, BorderLayout.NORTH);
@@ -85,7 +84,6 @@ public class EcranDemarrage extends JDialog {
         fond.add(titre, BorderLayout.NORTH);
         fond.add(centre, BorderLayout.CENTER);
         fond.add(bas, BorderLayout.SOUTH);
-
         add(fond, BorderLayout.CENTER);
     }
 
