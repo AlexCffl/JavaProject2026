@@ -158,16 +158,22 @@ public class FenetreJeu extends JFrame {
 
         new ControleurJeu(monModele, maVue);
         maVue.actualiser(monModele.getJoueurCourant(), monModele.getJoueurAdverse());
-        maVue.setVisible(true);
+        
 
-        EcranDemarrage intro = new EcranDemarrage(maVue);
+        EcranDemarrage intro = new EcranDemarrage(null);
         intro.setVisible(true);
 
-        if (!intro.isCommencer()) {
-            maVue.dispose();
-            return;
+        if (intro.isCommencer()) {
+        	maVue.setLocationRelativeTo(null);
+            maVue.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            maVue.setVisible(true);
+            maVue.toFront();
+            maVue.requestFocus();
+        }else {
+        	maVue.dispose();
         }
     }
+     
 
     public void actualiser(Joueur joueurCourant, Joueur joueurAdverse) {
         labelTour.setText("Tour de : " + joueurCourant.getNom());

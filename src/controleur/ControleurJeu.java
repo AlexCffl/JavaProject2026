@@ -226,7 +226,9 @@ public class ControleurJeu {
         }
 
         boolean adverseATerrain = !modele.getJoueurAdverse().getTerrain().isEmpty();
+       
         vue.getBoutonAttaquer().setEnabled(!adverseATerrain);
+       
     }
     
 
