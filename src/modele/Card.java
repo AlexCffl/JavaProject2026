@@ -1,12 +1,9 @@
 package modele;
 
 import java.util.TreeSet;
-import java.io.Serializable;
 
-public class Card implements Serializable {
+public class Card {
 	
-	private static final long serialVersionUID = 1L;
-
 	public enum Effects {TRAMPLE, HASTE, FLYING};
 	
 	public enum Colors {RED, WHITE, GREEN, BLUE, DARK, NONE};
@@ -74,8 +71,7 @@ public class Card implements Serializable {
 	
 	public void setPvPerdus(int valeur) { pvPerdus = valeur; }
 	public void setTapped(boolean tapped) { this.tapped = tapped; }
-	protected void setColor(Colors color) { this.color = color; }
-	protected void setName(String name) { this.name = name; }
+
 
 	
 	public void setPeutAttaquer(boolean peutAttaquer) {
