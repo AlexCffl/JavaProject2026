@@ -36,9 +36,6 @@ public class FenetreJeu extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
-        // =========================
-        // HAUT : ADVERSAIRE
-        // =========================
         JPanel panelAdversaire = new JPanel();
         panelAdversaire.setBackground(new Color(12, 10, 18));
         panelAdversaire.setBorder(BorderFactory.createLineBorder(new Color(90, 70, 130), 2));
@@ -49,9 +46,7 @@ public class FenetreJeu extends JFrame {
 
         panelAdversaire.add(labelPvAdversaire);
 
-        // =========================
-        // CENTRE : ARENE
-        // =========================
+       
         JPanel panelPlateau = new PanelImage("/images/fond_arene.jpg");
         panelPlateau.setLayout(new GridLayout(2, 1));
 
@@ -92,9 +87,7 @@ public class FenetreJeu extends JFrame {
         panelPlateau.add(panelTerrainAdversaire);
         panelPlateau.add(panelTerrainJoueur);
 
-        // =========================
-        // BAS : JOUEUR + MAIN
-        // =========================
+        
         JPanel panelJoueur = new JPanel();
         panelJoueur.setLayout(new BorderLayout());
         panelJoueur.setBackground(new Color(15, 12, 18));
@@ -124,9 +117,7 @@ public class FenetreJeu extends JFrame {
 
         panelJoueur.add(panelMainJoueur, BorderLayout.CENTER);
 
-        // =========================
-        // DROITE : ACTIONS
-        // =========================
+    
         JPanel panelActions = new JPanel();
         panelActions.setLayout(new BoxLayout(panelActions, BoxLayout.Y_AXIS));
         panelActions.setBackground(new Color(12, 10, 18));
@@ -160,9 +151,7 @@ public class FenetreJeu extends JFrame {
         panelActions.add(boutonAttaquer);
         panelActions.add(Box.createVerticalGlue());
 
-        // =========================
-        // GAUCHE : MESSAGES
-        // =========================
+        
         labelMessage = new JLabel("Bienvenue dans la partie !");
         labelMessage.setForeground(Color.WHITE);
         labelMessage.setFont(new Font("Arial", Font.BOLD, 14));
@@ -174,9 +163,7 @@ public class FenetreJeu extends JFrame {
         panelMessage.setBorder(BorderFactory.createLineBorder(new Color(90, 70, 130), 2));
         panelMessage.add(labelMessage, BorderLayout.CENTER);
 
-        // =========================
-        // AJOUT FINAL
-        // =========================
+     
         this.add(panelAdversaire, BorderLayout.NORTH);
         this.add(panelPlateau, BorderLayout.CENTER);
         this.add(panelJoueur, BorderLayout.SOUTH);
@@ -317,9 +304,6 @@ public class FenetreJeu extends JFrame {
                         + " | Deck : " + joueurAdverse.getDeck().size()
         );
 
-        // =========================
-        // MAIN DU JOUEUR
-        // =========================
         panelMainJoueur.removeAll();
 
         for (Card c : joueurCourant.getMain()) {
@@ -349,9 +333,6 @@ public class FenetreJeu extends JFrame {
             panelMainJoueur.add(vueCarte);
         }
 
-        // =========================
-        // TERRAIN DU JOUEUR
-        // =========================
         panelTerrainJoueur.removeAll();
 
         for (Card c : joueurCourant.getTerrain()) {
@@ -379,9 +360,7 @@ public class FenetreJeu extends JFrame {
             panelTerrainJoueur.add(vueCarte);
         }
 
-        // =========================
-        // TERRAIN ADVERSAIRE
-        // =========================
+
         panelTerrainAdversaire.removeAll();
 
         for (Card c : joueurAdverse.getTerrain()) {
@@ -415,9 +394,7 @@ public class FenetreJeu extends JFrame {
         panelTerrainAdversaire.repaint();
     }
 
-    // ==========================================================
-    // CONTOUR BLANC SUR LES CARTES DE LA MAIN
-    // ==========================================================
+
     private void ajouterContourBlanc(JPanel carte) {
         javax.swing.border.Border bordureNormale = carte.getBorder();
 
@@ -456,9 +433,7 @@ public class FenetreJeu extends JFrame {
         }
     }
 
-    // ==========================================================
-    // RENDRE LES CARTES CLIQUABLES
-    // ==========================================================
+
     private void rendreCarteCliquable(Component composant, java.awt.event.MouseListener listener, Cursor curseur) {
         composant.setCursor(curseur);
         composant.addMouseListener(listener);
@@ -482,9 +457,7 @@ public class FenetreJeu extends JFrame {
         return boutonAttaquer;
     }
 
-    // ==========================================================
-    // PANEL AVEC IMAGE DE FOND POUR L'ARENE
-    // ==========================================================
+
     private static class PanelImage extends JPanel {
 
         private static final long serialVersionUID = 1L;
@@ -523,9 +496,7 @@ public class FenetreJeu extends JFrame {
         }
     }
 
-    // ==========================================================
-    // ZONE TRANSPARENTE POUR TERRAIN JOUEUR / ADVERSAIRE
-    // ==========================================================
+
     private static class PanelZone extends JPanel {
 
         private static final long serialVersionUID = 1L;

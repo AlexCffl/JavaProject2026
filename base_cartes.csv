@@ -1,33 +1,33 @@
 nom;couleur;coutTotal;coutCouleur;attaque;defense;effets;image
-Ancestor Dragon;WHITE;6;2;5;6;FLYING;images/cartes/fdn-489-ancestor-dragon.jpg
-Elfsworn Giant;GREEN;5;2;4;6;TRAMPLE;images/cartes/fdn-103-elfsworn-giant.jpg
-Eclipsed Elf;GREEN;3;1;3;2;HASTE;images/cartes/ecl-218-eclipsed-elf.jpg
+Dragon Rage Channeler;RED;1;1;2;1;;images/cartes/mh2-A-121-a-dragon-s-rage-channeler.jpg
+Wolfbat;DARK;1;1;1;2;;images/cartes/tla-122-wolfbat.jpg
+Abigale Eloquent First Year;BLUE;1;1;1;2;HASTE;images/cartes/ecl-204-abigale-eloquent-first-year.jpg
+Aerie Auxiliary;WHITE;1;1;1;2;;images/cartes/mh3-18-aerie-auxiliary.jpg
+Eclipsed Elf;GREEN;2;1;2;2;HASTE;images/cartes/ecl-218-eclipsed-elf.jpg
+Lightning Wolf;RED;2;1;3;1;HASTE;images/cartes/vow-168-lightning-wolf.jpg
+Abbot of Keral Keep;RED;2;1;2;2;HASTE;images/cartes/ea3-2-abbot-of-keral-keep.jpg
+Fissure Wizard;RED;2;1;2;1;HASTE;images/cartes/znr-140-fissure-wizard.jpg
+Arlinn Wolf;GREEN;2;1;2;3;TRAMPLE;images/cartes/war-151-arlinn-s-wolf.jpg
+Knight of Dusk Shadow;DARK;2;1;2;2;HASTE;images/cartes/dmu-96-knight-of-dusk-s-shadow.jpg
+Dragonkin Berserker;RED;3;1;4;2;TRAMPLE;images/cartes/khm-131-dragonkin-berserker.jpg
+Mosswood Dreadknight;DARK;3;1;3;4;TRAMPLE;images/cartes/woe-231-mosswood-dreadknight.jpg
+Aeromunculus;BLUE;3;1;2;3;FLYING;images/cartes/rna-152-aeromunculus.jpg
+Kessig Wolfrider;GREEN;3;1;3;3;HASTE;images/cartes/vow-165-kessig-wolfrider.jpg
+Acclaimed Contender;WHITE;3;1;3;3;HASTE;images/cartes/eld-1-acclaimed-contender.jpg
+Aberrant Mind Sorcerer;BLUE;3;1;3;3;;images/cartes/afr-44-aberrant-mind-sorcerer.jpg
 Bloodbraid Elf;GREEN;4;2;4;3;HASTE;images/cartes/j25-743-bloodbraid-elf.jpg
-Adult Gold Dragon;RED;5;2;4;4;FLYING,HASTE;images/cartes/afr-216-adult-gold-dragon.jpg
-Mosswood Dreadknight;DARK;4;2;4;5;TRAMPLE;images/cartes/woe-231-mosswood-dreadknight.jpg
-Knight of Dusk Shadow;DARK;4;2;5;3;HASTE;images/cartes/dmu-96-knight-of-dusk-s-shadow.jpg
 Fireborn Knight;RED;4;2;4;3;HASTE;images/cartes/eld-210-fireborn-knight.jpg
-Aryel Knight of Windgrace;WHITE;5;2;4;4;HASTE;images/cartes/dom-192-aryel-knight-of-windgrace.jpg
-Angelic Guardian;WHITE;6;3;4;6;FLYING;images/cartes/m20-302-angelic-guardian.jpg
-Dragonkin Berserker;RED;4;2;5;3;TRAMPLE;images/cartes/khm-131-dragonkin-berserker.jpg
-Dragon Rage Channeler;RED;3;1;3;2;FLYING;images/cartes/mh2-A-121-a-dragon-s-rage-channeler.jpg
-Fissure Wizard;RED;3;1;3;2;HASTE;images/cartes/znr-140-fissure-wizard.jpg
-Hurkyl Master Wizard;BLUE;5;2;3;5;FLYING;images/cartes/bro-51-hurkyl-master-wizard.jpg
 Umara Wizard;BLUE;4;2;3;3;HASTE;images/cartes/znr-86-umara-wizard.jpg
 Erudite Wizard;BLUE;4;2;2;5;FLYING;images/cartes/fdn-37-erudite-wizard.jpg
-Wolfbat;DARK;3;1;2;3;FLYING;images/cartes/tla-122-wolfbat.jpg
-Lightning Wolf;RED;3;1;4;2;HASTE;images/cartes/vow-168-lightning-wolf.jpg
-Kessig Wolfrider;GREEN;4;2;4;3;HASTE;images/cartes/vow-165-kessig-wolfrider.jpg
-Arlinn Wolf;GREEN;3;1;3;3;TRAMPLE;images/cartes/war-151-arlinn-s-wolf.jpg
-Aeromunculus;BLUE;4;2;3;4;FLYING;images/cartes/rna-152-aeromunculus.jpg
 Aether Channeler;BLUE;4;2;3;3;FLYING;images/cartes/dmu-42-aether-channeler.jpg
-Aerie Auxiliary;WHITE;3;1;2;3;FLYING;images/cartes/mh3-18-aerie-auxiliary.jpg
 Acolyte of Aclazotz;DARK;4;2;4;3;TRAMPLE;images/cartes/lci-89-acolyte-of-aclazotz.jpg
-Acclaimed Contender;WHITE;4;2;4;3;HASTE;images/cartes/eld-1-acclaimed-contender.jpg
-Academy Loremaster;BLUE;5;2;2;6;FLYING;images/cartes/dmu-40-academy-loremaster.jpg
-Abigale Eloquent First Year;BLUE;3;1;2;3;HASTE;images/cartes/ecl-204-abigale-eloquent-first-year.jpg
-Abbot of Keral Keep;RED;3;1;3;2;HASTE;images/cartes/ea3-2-abbot-of-keral-keep.jpg
+Elfsworn Giant;GREEN;5;2;4;6;TRAMPLE;images/cartes/fdn-103-elfsworn-giant.jpg
+Adult Gold Dragon;RED;5;2;4;4;FLYING,HASTE;images/cartes/afr-216-adult-gold-dragon.jpg
+Aryel Knight of Windgrace;WHITE;5;2;4;4;HASTE;images/cartes/dom-192-aryel-knight-of-windgrace.jpg
+Hurkyl Master Wizard;BLUE;5;2;3;5;;images/cartes/bro-51-hurkyl-master-wizard.jpg
+Academy Loremaster;BLUE;5;2;4;5;;images/cartes/dmu-40-academy-loremaster.jpg
+Ancestor Dragon;WHITE;6;2;5;6;FLYING;images/cartes/fdn-489-ancestor-dragon.jpg
+Angelic Guardian;WHITE;6;3;5;6;;images/cartes/m20-302-angelic-guardian.jpg
 Aberrant Manawurm;GREEN;6;3;6;5;TRAMPLE;images/cartes/sos-138-aberrant-manawurm.jpg
-Aberrant Mind Sorcerer;BLUE;4;2;3;4;FLYING;images/cartes/afr-44-aberrant-mind-sorcerer.jpg
-Alrund God of the Cosmos;BLUE;6;3;4;6;FLYING;images/cartes/khm-A-40-a-alrund-god-of-the-cosmos.jpg
+Alrund God of the Cosmos;BLUE;6;3;5;6;;images/cartes/khm-A-40-a-alrund-god-of-the-cosmos.jpg
 Acererak the Archlich;DARK;6;3;6;5;TRAMPLE;images/cartes/afr-A-87-a-acererak-the-archlich.jpg

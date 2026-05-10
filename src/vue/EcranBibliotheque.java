@@ -44,6 +44,7 @@ public class EcranBibliotheque extends JDialog {
 
         filtreTri = new JComboBox<>(new String[]{
                 "AUCUN",
+                "COULEUR",
                 "ATTAQUE CROISSANTE",
                 "ATTAQUE DECROISSANTE",
                 "DEFENSE CROISSANTE",
@@ -68,7 +69,7 @@ public class EcranBibliotheque extends JDialog {
         boutonRechercher.addActionListener(e -> appliquerFiltres());
 
         filtreCouleur.addActionListener(e -> appliquerFiltres());
-        filtreTri.addActionListener(e -> appliquerFiltres());
+        //filtreTri.addActionListener(e -> appliquerFiltres());
 
         appliquerFiltres();
     }
@@ -89,6 +90,16 @@ public class EcranBibliotheque extends JDialog {
             if (correspondCouleur) {
                 cartesAffichees.add(c);
             }
+        }
+        
+        if (triChoisi.equals("COULEUR")) {
+            cartesAffichees.sort((c1, c2) -> {
+                int comp = c1.getColor().compareTo(c2.getColor());
+                if (comp == 0) {
+                    return c1.getName().compareTo(c2.getName());
+                }
+                return comp;
+            });
         }
 
         if (triChoisi.equals("ATTAQUE CROISSANTE")) {

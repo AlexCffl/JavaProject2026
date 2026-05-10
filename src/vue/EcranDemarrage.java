@@ -229,7 +229,6 @@ public class EcranDemarrage extends JDialog {
             int largeur = getWidth();
             int hauteur = getHeight();
 
-            // Image de fond
             if (imageFond != null) {
                 g2.drawImage(imageFond, 0, 0, largeur, hauteur, this);
             } else {
@@ -237,19 +236,15 @@ public class EcranDemarrage extends JDialog {
                 g2.fillRect(0, 0, largeur, hauteur);
             }
 
-            // Voile sombre sur toute l'image pour rendre le texte lisible
             g2.setColor(new Color(0, 0, 0, 80));
             g2.fillRect(0, 0, largeur, hauteur);
 
-            // Panneau gauche pour le titre
             g2.setColor(new Color(0, 0, 0, 145));
             g2.fillRoundRect(50, 70, largeur / 2 + 150, hauteur - 140, 35, 35);
 
-            // Panneau droit pour les boutons
             g2.setColor(new Color(0, 0, 0, 165));
             g2.fillRoundRect(largeur - 480, 130, 400, hauteur - 260, 35, 35);
 
-            // Bordures bleu fluo simples, sans animation
             g2.setColor(new Color(0, 180, 255, 120));
             g2.setStroke(new BasicStroke(2));
             g2.drawRoundRect(50, 70, largeur / 2 + 150, hauteur - 140, 35, 35);

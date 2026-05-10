@@ -15,7 +15,7 @@ public class Joueur {
 
 	public Joueur(String nom, Deck deckDeDepart) {
 		this.nom = nom;
-		this.pointsDeVie = 20; 
+		this.pointsDeVie = 12; 
 		this.deck = deckDeDepart;	
 		this.main = new ArrayList<>();
 		this.terrain = new ArrayList<>();
