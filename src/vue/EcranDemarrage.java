@@ -140,7 +140,7 @@ public class EcranDemarrage extends JDialog {
 
         bouton.setFont(new Font("Serif", Font.BOLD, 19));
         bouton.setForeground(new Color(245, 235, 210));
-        bouton.setBackground(new Color(25, 32, 45));
+        bouton.setBackground(new Color(10, 25, 45));
         bouton.setFocusPainted(false);
         bouton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         bouton.setBorder(BorderFactory.createLineBorder(new Color(220, 150, 60), 2));
@@ -149,16 +149,16 @@ public class EcranDemarrage extends JDialog {
         bouton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent e) {
-                bouton.setBackground(new Color(170, 75, 35));
+                bouton.setBackground(new Color(0, 90, 150));
                 bouton.setForeground(Color.WHITE);
                 bouton.setBorder(BorderFactory.createLineBorder(new Color(255, 210, 100), 3));
             }
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent e) {
-                bouton.setBackground(new Color(25, 32, 45));
+                bouton.setBackground(new Color(10, 25, 45));
                 bouton.setForeground(new Color(245, 235, 210));
-                bouton.setBorder(BorderFactory.createLineBorder(new Color(220, 150, 60), 2));
+                bouton.setBorder(BorderFactory.createLineBorder(new Color(0, 190, 255), 2));
             }
         });
 
@@ -229,6 +229,7 @@ public class EcranDemarrage extends JDialog {
             int largeur = getWidth();
             int hauteur = getHeight();
 
+            // Image de fond
             if (imageFond != null) {
                 g2.drawImage(imageFond, 0, 0, largeur, hauteur, this);
             } else {
@@ -236,14 +237,23 @@ public class EcranDemarrage extends JDialog {
                 g2.fillRect(0, 0, largeur, hauteur);
             }
 
-            g2.setColor(new Color(0, 0, 0, 70));
+            // Voile sombre sur toute l'image pour rendre le texte lisible
+            g2.setColor(new Color(0, 0, 0, 80));
             g2.fillRect(0, 0, largeur, hauteur);
 
-            g2.setColor(new Color(0, 0, 0, 135));
+            // Panneau gauche pour le titre
+            g2.setColor(new Color(0, 0, 0, 145));
             g2.fillRoundRect(50, 70, largeur / 2 + 150, hauteur - 140, 35, 35);
 
-            g2.setColor(new Color(0, 0, 0, 160));
+            // Panneau droit pour les boutons
+            g2.setColor(new Color(0, 0, 0, 165));
             g2.fillRoundRect(largeur - 480, 130, 400, hauteur - 260, 35, 35);
+
+            // Bordures bleu fluo simples, sans animation
+            g2.setColor(new Color(0, 180, 255, 120));
+            g2.setStroke(new BasicStroke(2));
+            g2.drawRoundRect(50, 70, largeur / 2 + 150, hauteur - 140, 35, 35);
+            g2.drawRoundRect(largeur - 480, 130, 400, hauteur - 260, 35, 35);
 
             g2.dispose();
         }

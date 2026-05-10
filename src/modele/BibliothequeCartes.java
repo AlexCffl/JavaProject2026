@@ -9,6 +9,7 @@ public class BibliothequeCartes {
 
     public static ArrayList<Card> chargerCartesDepuisCSV(String cheminFichier) {
         ArrayList<Card> catalogue = new ArrayList<>();
+        
 
         try (BufferedReader br = new BufferedReader(new FileReader(cheminFichier))) {
             String ligne = br.readLine(); 
@@ -24,17 +25,21 @@ public class BibliothequeCartes {
                 int coutCouleur = Integer.parseInt(donnees[3]);
                 int attaque = Integer.parseInt(donnees[4]);
                 int defense = Integer.parseInt(donnees[5]);
+                String imagePath = "";
+                if (donnees.length >= 8) {
+                    imagePath = donnees[7];
+                }
 
                 TreeSet<Card.Effects> effets = new TreeSet<>();
                 
-                if (donnees.length == 7 && !donnees[6].trim().isEmpty()) {
+                if (donnees.length >= 7 && !donnees[6].trim().isEmpty()) {
                     String[] listeEffets = donnees[6].split(",");
                     for (String effetStr : listeEffets) {
                         effets.add(Card.Effects.valueOf(effetStr.trim()));
                     }
                 }
 
-                Card nouvelleCarte = new Card(couleur, nom, false, attaque, defense, effets, coutTotal, coutCouleur);
+                Card nouvelleCarte = new Card(couleur, nom, false, attaque, defense, effets, coutTotal, coutCouleur, imagePath);
                 catalogue.add(nouvelleCarte);
             }
             

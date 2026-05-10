@@ -17,12 +17,13 @@ public class Card {
 	private int tC;
 	private int cC;
 	private int pvPerdus;
+	private String imagePath;
 
 
 	private boolean peutAttaquer;
 
 	public Card(Colors color, String name, boolean tapped, int attack, int defense,
-			TreeSet<Effects> bonus, int totalCost, int colorCost) {
+			TreeSet<Effects> bonus, int totalCost, int colorCost,String imagePath) {
 		
 		this.color = color;
 		this.name = name;
@@ -34,6 +35,7 @@ public class Card {
 		tC = totalCost;
 		cC = colorCost;
 		pvPerdus = 0;
+		this.imagePath=imagePath;
 
 		
 		peutAttaquer = false;
@@ -64,7 +66,9 @@ public class Card {
 	public boolean isTapped() { return tapped; }
 	public String getName() { return name; }
 	public TreeSet<Effects> getEffects() { return effects; }
-
+	public String getImagePath() {
+	    return imagePath;
+	}
 	
 	public boolean isPeutAttaquer() { return peutAttaquer; }
 	
