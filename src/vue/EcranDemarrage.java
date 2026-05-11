@@ -166,25 +166,116 @@ public class EcranDemarrage extends JDialog {
     }
 
     private void afficherEnSavoirPlus() {
-        String message =
-                "CARD BATTLE ARENA\n\n"
-              + "Ce jeu est un jeu de cartes strategique au tour par tour.\n\n"
-              + "Chaque joueur possede un deck, une main et un terrain.\n"
-              + "Le but est de reduire les points de vie de l'adversaire a 0.\n\n"
-              + "Regles principales :\n"
-              + "- poser des cartes sur le terrain ;\n"
-              + "- attaquer les cartes adverses ;\n"
-              + "- attaquer directement si le terrain adverse est vide ;\n"
-              + "- utiliser les effets speciaux des cartes ;\n"
-              + "- gagner lorsque les PV adverses tombent a 0.\n\n"
-              + "Le jeu reprend une ambiance fantasy avec une arene magique et des creatures.";
+        JDialog dialogue = new JDialog(this, "En savoir plus", true);
+        dialogue.setSize(620, 560);
+        dialogue.setLocationRelativeTo(this);
+        dialogue.setResizable(false);
 
-        JOptionPane.showMessageDialog(
-                this,
-                message,
-                "En savoir plus",
-                JOptionPane.INFORMATION_MESSAGE
+        JPanel fond = new JPanel(new BorderLayout());
+        fond.setBackground(new Color(8, 10, 20));
+        fond.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(0, 180, 255), 2),
+                BorderFactory.createEmptyBorder(20, 25, 20, 25)
+        ));
+
+        JLabel titre = new JLabel("CARD BATTLE ARENA", JLabel.CENTER);
+        titre.setForeground(new Color(220, 210, 255));
+        titre.setFont(new Font("Serif", Font.BOLD, 34));
+
+        JLabel sousTitre = new JLabel("Jeu de cartes strategique fantasy", JLabel.CENTER);
+        sousTitre.setForeground(new Color(120, 230, 255));
+        sousTitre.setFont(new Font("Serif", Font.ITALIC, 18));
+
+        JPanel haut = new JPanel();
+        haut.setOpaque(false);
+        haut.setLayout(new BoxLayout(haut, BoxLayout.Y_AXIS));
+        titre.setAlignmentX(Component.CENTER_ALIGNMENT);
+        sousTitre.setAlignmentX(Component.CENTER_ALIGNMENT);
+        haut.add(titre);
+        haut.add(Box.createVerticalStrut(8));
+        haut.add(sousTitre);
+
+        JTextPane texte = new JTextPane();
+        texte.setContentType("text/html");
+        texte.setEditable(false);
+        texte.setFocusable(false);
+        texte.setBackground(new Color(12, 15, 30));
+        texte.setForeground(Color.WHITE);
+        texte.setBorder(BorderFactory.createEmptyBorder(15, 18, 15, 18));
+
+        texte.setText(
+                "<html>"
+              + "<body style='font-family:Arial; font-size:13px; color:white;'>"
+
+              + "<h2 style='color:#78e6ff;'>Objectif du jeu</h2>"
+              + "<p>Chaque joueur commence avec <b>20 points de vie</b>. "
+              + "Le but est simple : poser des creatures, attaquer l'adversaire "
+              + "et reduire ses points de vie a <b>0</b>.</p>"
+
+              + "<h2 style='color:#78e6ff;'>Deroulement d'un tour</h2>"
+              + "<p>A chaque tour, le joueur gagne du mana, pioche une carte, "
+              + "peut jouer des creatures, puis attaquer avec les cartes disponibles.</p>"
+
+              + "<h2 style='color:#78e6ff;'>Les effets speciaux</h2>"
+              + "<p><b style='color:#ffaaaa;'>HASTE</b> : la creature peut attaquer directement apres son arrivee.</p>"
+              + "<p><b style='color:#aaffaa;'>TRAMPLE</b> : les degats en trop touchent le joueur adverse.</p>"
+              + "<p><b style='color:#aaaaff;'>FLYING</b> : la creature ne peut etre attaquee que par une creature volante.</p>"
+
+              + "<h2 style='color:#78e6ff;'>Conseil de strategie</h2>"
+              + "<p>Utilise les creatures rapides pour mettre la pression, "
+              + "les creatures solides pour proteger ton terrain, et les creatures volantes "
+              + "pour garder l'avantage.</p>"
+
+              + "<p style='color:#d2beff; text-align:center; font-size:15px;'>"
+              + "<b>Prepare ton deck. Choisis ta strategie. Domine l'arene.</b>"
+              + "</p>"
+
+              + "</body>"
+              + "</html>"
         );
+
+        JScrollPane scroll = new JScrollPane(texte);
+        scroll.setBorder(BorderFactory.createLineBorder(new Color(90, 70, 130), 2));
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+
+        JButton boutonFermer = new JButton("FERMER");
+        boutonFermer.setPreferredSize(new Dimension(180, 45));
+        boutonFermer.setMaximumSize(new Dimension(180, 45));
+        boutonFermer.setFont(new Font("Serif", Font.BOLD, 16));
+        boutonFermer.setForeground(Color.WHITE);
+        boutonFermer.setBackground(new Color(35, 25, 55));
+        boutonFermer.setFocusPainted(false);
+        boutonFermer.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        boutonFermer.setBorder(BorderFactory.createLineBorder(new Color(0, 180, 255), 2));
+        boutonFermer.setOpaque(true);
+
+        boutonFermer.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent e) {
+                boutonFermer.setBackground(new Color(0, 90, 150));
+                boutonFermer.setBorder(BorderFactory.createLineBorder(new Color(120, 230, 255), 3));
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent e) {
+                boutonFermer.setBackground(new Color(35, 25, 55));
+                boutonFermer.setBorder(BorderFactory.createLineBorder(new Color(0, 180, 255), 2));
+            }
+        });
+
+        boutonFermer.addActionListener(e -> dialogue.dispose());
+
+        JPanel bas = new JPanel();
+        bas.setOpaque(false);
+        bas.add(boutonFermer);
+
+        fond.add(haut, BorderLayout.NORTH);
+        fond.add(Box.createVerticalStrut(15), BorderLayout.WEST);
+        fond.add(scroll, BorderLayout.CENTER);
+        fond.add(bas, BorderLayout.SOUTH);
+
+        dialogue.setContentPane(fond);
+        dialogue.setVisible(true);
     }
 
     private void ajouterRaccourcis() {
